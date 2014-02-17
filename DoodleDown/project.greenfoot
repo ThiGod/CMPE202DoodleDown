@@ -1,0 +1,9 @@
+#Greenfoot properties
+#Sun Feb 16 16:07:55 PST 2014
+version=2.5.0
+project.charset=UTF-8
+class.ScoreKeeper.superclass=greenfoot.Actor
+class.Doodler.superclass=greenfoot.Actor
+class.Arrow.superclass=greenfoot.Actor
+class.DoodleWorld.superclass=greenfoot.World
+class.Ground.superclass=greenfoot.Actor
