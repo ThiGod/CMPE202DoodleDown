@@ -13,6 +13,7 @@ public class Doodler extends Actor
     private int mSpeed = 1;
     private int acceleration = 1;
     public boolean game = false;
+    public boolean gameOver = false;
     
     /**
      * Act - do whatever the Doodler wants to do. This method is called whenever
@@ -25,27 +26,31 @@ public class Doodler extends Actor
             checkKeys();
             checkFall();
         }
+        else 
+        {
+            gameOver=true;
+        }
     }    
     
     private void checkKeys() {
         if(Greenfoot.isKeyDown("left")) {
-            setImage("doodler.png");
+            //setImage("doodler.png");
             moveLeft();
         }
         if(Greenfoot.isKeyDown("right")) {
-            setImage("doodler.png");
+            //setImage("doodler.png");
             moveRight();
         }
     }
     
     public boolean checkDeath() {
-        Message m = new Message("Game Over");
+       // Message m = new Message("Game Over");
         if(getY() == 0) {
-            getWorld().removeObject(this);
+            //getWorld().removeObject(this);
             return false;
         }
         if(getY() == 399) {
-            getWorld().removeObject(this);
+            //getWorld().removeObject(this);
             return false;
         }
         else {

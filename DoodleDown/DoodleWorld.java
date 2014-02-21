@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.*;
 
 /**
  * Write a description of class DoodleWorld here.
@@ -42,12 +43,23 @@ public class DoodleWorld extends World
  
     public void act()
     {
+        List<Doodler> doodlers=getObjects(Doodler.class);
+        Doodler doodler=doodlers.remove(0);
+        if(doodler.gameOver==false)
+        {
              if (timer != CHECKPOINT) 
                 timer++;
              else {
                  timer=0;
                  addGround();
                 }
+         }
+        else{
+            Message m = new Message("Game Over");
+            addObject(m,300,200);
+            removeObject(doodler);
+            removeObjects(getObjects(Ground.class));
+        }
     }
     
   
