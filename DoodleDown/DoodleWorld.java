@@ -41,14 +41,13 @@ public class DoodleWorld extends World
     
  
     public void act()
-    {  
-     if (timer != CHECKPOINT) 
-        timer++;
-     else 
-      {
-        timer=0;
-        addGround();
-      }
+    {
+             if (timer != CHECKPOINT) 
+                timer++;
+             else {
+                 timer=0;
+                 addGround();
+                }
     }
     
   

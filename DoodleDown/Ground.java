@@ -9,15 +9,17 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Ground extends Actor
 {
     private int mSpeed = 1;
-    
+
     /**
      * Act - do whatever the Ground wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     public void act()
     {
-        moveUp();
-        checkGround();
+        if(!getWorld().getObjects(Doodler.class).isEmpty()) {
+            moveUp();
+            checkGround();
+        }
     }    
     
     public void moveUp() {

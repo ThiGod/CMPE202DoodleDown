@@ -12,6 +12,7 @@ public class Doodler extends Actor
     private int vSpeed = 0;
     private int mSpeed = 1;
     private int acceleration = 1;
+    public boolean game = false;
     
     /**
      * Act - do whatever the Doodler wants to do. This method is called whenever
@@ -19,9 +20,11 @@ public class Doodler extends Actor
      */
     public void act() 
     {
-       moveUp();
-       checkKeys();
-       checkFall();
+        if(checkDeath()) {
+            moveUp();
+            checkKeys();
+            checkFall();
+        }
     }    
     
     private void checkKeys() {
@@ -33,6 +36,26 @@ public class Doodler extends Actor
             setImage("doodler.png");
             moveRight();
         }
+    }
+    
+    public boolean checkDeath() {
+        Message m = new Message("Game Over");
+        if(getY() == 0) {
+            getWorld().removeObject(this);
+            return false;
+        }
+        if(getY() == 399) {
+            getWorld().removeObject(this);
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+    
+    public int returnHeight() {
+        int h = getY();
+        return h;
     }
     
     public void moveUp() {
