@@ -8,7 +8,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Ground extends Actor
 {
-    private int mSpeed = 1;
+    private int moveSpeed = 1; //World go up speed
 
     /**
      * Act - do whatever the Ground wants to do. This method is called whenever
@@ -23,7 +23,7 @@ public class Ground extends Actor
     }    
     
     public void moveUp() {
-        setLocation(getX(), getY() - mSpeed);
+        setLocation(getX(), getY() - moveSpeed);
     }
     
     public void checkGround() {

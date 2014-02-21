@@ -8,12 +8,11 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Doodler extends Actor
 {
-    private int speed = 8;
-    private int vSpeed = 0;
-    private int mSpeed = 1;
-    private int acceleration = 1;
-    public boolean game = false;
-   
+    private int speed = 8; //Doodler honrizontal speed
+    private int fallSpeed = 0; //Doodler falling speed
+    private int moveSpeed = 1; //World go up speed
+    private int acceleration = 1; //Doodler falling speed acceleration
+    public boolean game = false; //Check the game is done or not
     
     /**
      * Act - do whatever the Doodler wants to do. This method is called whenever
@@ -44,7 +43,6 @@ public class Doodler extends Actor
     }
     
     public boolean checkDeath() {
-       // Message m = new Message("Game Over");
         if(getY() == 0) {
             //getWorld().removeObject(this);
             return false;
@@ -64,7 +62,7 @@ public class Doodler extends Actor
     }
     
     public void moveUp() {
-        setLocation(getX(), getY() - mSpeed);
+        setLocation(getX(), getY() - moveSpeed);
     }
     
     public boolean onGround() {
@@ -74,7 +72,7 @@ public class Doodler extends Actor
     
     public void checkFall() {
         if(onGround()) {
-            vSpeed = 0;
+            fallSpeed = 0;
         }
         else {
             fall();
@@ -82,8 +80,8 @@ public class Doodler extends Actor
     }
     
     public void fall() {
-        setLocation(getX(), getY() + vSpeed);
-        vSpeed = vSpeed + acceleration;
+        setLocation(getX(), getY() + fallSpeed);
+        fallSpeed = fallSpeed + acceleration;
     }
     
     public void moveLeft() {
