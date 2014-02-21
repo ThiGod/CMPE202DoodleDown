@@ -10,6 +10,7 @@ public class Doodler extends Actor
 {
     private int speed = 8;
     private int vSpeed = 0;
+    private int mSpeed = 1;
     private int acceleration = 1;
     
     /**
@@ -18,6 +19,7 @@ public class Doodler extends Actor
      */
     public void act() 
     {
+       moveUp();
        checkKeys();
        checkFall();
     }    
@@ -31,6 +33,10 @@ public class Doodler extends Actor
             setImage("doodler.png");
             moveRight();
         }
+    }
+    
+    public void moveUp() {
+        setLocation(getX(), getY() - mSpeed);
     }
     
     public boolean onGround() {
