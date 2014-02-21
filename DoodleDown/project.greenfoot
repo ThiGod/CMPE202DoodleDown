@@ -1,5 +1,5 @@
 #Greenfoot properties
-#Thu Feb 20 20:14:59 PST 2014
+#Thu Feb 20 20:21:36 PST 2014
 class.Doodler.image=doodler.png
 class.Doodler.superclass=greenfoot.Actor
 target2.name=Ground
@@ -8,7 +8,7 @@ target4.x=160
 target4.name=ScoreKeeper
 target2.showInterface=false
 target1.editor.width=900
-class.DoodleWorld.image=Black-Background-Metal.jpg
+class.DoodleWorld.image=clouds.jpg
 target3.y=10
 target3.x=180
 target1.type=ClassTarget
@@ -40,7 +40,7 @@ target1.width=100
 mainWindow.height=580
 target3.width=80
 mainWindow.x=611
-class.Ground.image=ground.png
+class.Ground.image=ground01.png
 target3.showInterface=false
 target2.type=ClassTarget
 world.lastInstantiated=DoodleWorld
