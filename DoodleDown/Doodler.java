@@ -13,7 +13,7 @@ public class Doodler extends Actor
     private int mSpeed = 1;
     private int acceleration = 1;
     public boolean game = false;
-    public boolean gameOver = false;
+   
     
     /**
      * Act - do whatever the Doodler wants to do. This method is called whenever
@@ -27,8 +27,8 @@ public class Doodler extends Actor
             checkFall();
         }
         else 
-        {
-            gameOver=true;
+        { 
+           ((DoodleWorld)getWorld()).gameOver();
         }
     }    
     

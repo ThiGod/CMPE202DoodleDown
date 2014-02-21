@@ -1,5 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-import java.util.*;
+//import java.util.*;
 
 /**
  * Write a description of class DoodleWorld here.
@@ -12,6 +12,7 @@ public class DoodleWorld extends World
 
     private int timer = 0;  
     private static int CHECKPOINT = 80; 
+    private boolean gameOver=false;
     
     /**
      * Constructor for objects of class DoodleWorld.
@@ -43,9 +44,8 @@ public class DoodleWorld extends World
  
     public void act()
     {
-        List<Doodler> doodlers=getObjects(Doodler.class);
-        Doodler doodler=doodlers.remove(0);
-        if(doodler.gameOver==false)
+
+        if(gameOver==false)
         {
              if (timer != CHECKPOINT) 
                 timer++;
@@ -57,9 +57,10 @@ public class DoodleWorld extends World
         else{
             Message m = new Message("Game Over");
             addObject(m,300,200);
-            removeObject(doodler);
+            removeObjects(getObjects(Doodler.class));
             removeObjects(getObjects(Ground.class));
         }
+    
     }
     
   
@@ -71,5 +72,9 @@ public class DoodleWorld extends World
        
     }
     
+    public void gameOver()
+    {
+        gameOver=true;
+    }
 }
 
