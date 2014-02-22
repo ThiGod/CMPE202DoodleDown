@@ -21,7 +21,7 @@ public class DoodleWorld extends World
     public DoodleWorld()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(600, 400, 1); 
+        super(400, 600, 1); 
         prepare();
     }
 
@@ -36,7 +36,7 @@ public class DoodleWorld extends World
         Ground ground = new Ground();
         addObject(ground, 162, 129);
         Ground ground2 = new Ground();
-        addObject(ground2, 376, 238);
+        addObject(ground2, 306, 238);
         Ground ground3 = new Ground();
         addObject(ground3, 183, 338);
     }
@@ -56,7 +56,7 @@ public class DoodleWorld extends World
          }
         else{
             Message m = new Message("Game Over");
-            addObject(m,300,200);
+            addObject(m,200,300);
             removeObjects(getObjects(Doodler.class));
             removeObjects(getObjects(Ground.class));
         }
@@ -67,9 +67,7 @@ public class DoodleWorld extends World
     
     public void addGround()
     {
-      
-        addObject(new Ground(), Greenfoot.getRandomNumber(600), 400);
-       
+        addObject(new Ground(), Greenfoot.getRandomNumber(400), 600);  
     }
     
     public void gameOver()

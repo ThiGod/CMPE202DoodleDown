@@ -47,7 +47,7 @@ public class Doodler extends Actor
             //getWorld().removeObject(this);
             return false;
         }
-        if(getY() == 399) {
+        if(getY() == 599) {
             //getWorld().removeObject(this);
             return false;
         }
