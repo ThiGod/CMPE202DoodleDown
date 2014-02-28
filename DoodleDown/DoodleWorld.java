@@ -13,6 +13,7 @@ public class DoodleWorld extends World
     private int timer = 0;  
     private static int CHECKPOINT = 80; 
     private boolean gameOver=false;
+    private boolean soundPlayed=false;
     
     /**
      * Constructor for objects of class DoodleWorld.
@@ -59,6 +60,10 @@ public class DoodleWorld extends World
             addObject(m,200,300);
             removeObjects(getObjects(Doodler.class));
             removeObjects(getObjects(Ground.class));
+            if(!soundPlayed) {
+                Greenfoot.playSound("Gameover.mp3");
+                soundPlayed = true;
+            }
         }
     
     }
