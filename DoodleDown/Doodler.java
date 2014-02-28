@@ -13,6 +13,7 @@ public class Doodler extends Actor
     private int moveSpeed = 1; //World go up speed
     private int acceleration = 1; //Doodler falling speed acceleration
     public boolean game = false; //Check the game is done or not
+    public boolean soundPlayed = false; //Check whether the sound has played or not.
     
     /**
      * Act - do whatever the Doodler wants to do. This method is called whenever
@@ -67,6 +68,9 @@ public class Doodler extends Actor
     
     public boolean onGround() {
         Actor under = getOneObjectAtOffset(0, 20, Ground.class);
+        if(under != null){
+            soundPlayed = false;
+        }
         return under != null;
     }
     
@@ -80,6 +84,10 @@ public class Doodler extends Actor
     }
     
     public void fall() {
+        if(!soundPlayed) {
+            Greenfoot.playSound("Jump.mp3");
+            soundPlayed = true;
+        }
         setLocation(getX(), getY() + fallSpeed);
         fallSpeed = fallSpeed + acceleration;
     }
