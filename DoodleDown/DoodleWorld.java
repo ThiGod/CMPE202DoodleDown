@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.io.*;
 //import java.util.*;
 
 /**
@@ -14,7 +15,10 @@ public class DoodleWorld extends World
     private static int CHECKPOINT = 80; 
     private boolean gameOver=false;
     private boolean soundPlayed=false;
-    private int finalScore=0;
+    private static int finalScore=0;
+
+    //for loading the highscore
+    private int highScore=0;
     
     /**
      * Constructor for objects of class DoodleWorld.
@@ -25,6 +29,7 @@ public class DoodleWorld extends World
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(400, 600, 1); 
         prepare();
+        readScores();
     }
 
     /**
@@ -43,6 +48,7 @@ public class DoodleWorld extends World
         addObject(ground3, 183, 338);
         ScoreKeeper score=new ScoreKeeper();
         addObject(score, 345,12);
+      
     }
     
  
@@ -57,20 +63,33 @@ public class DoodleWorld extends World
                  addGround();
                 }
          }
-        else{
+        else
+        {
             if (!getObjects(ScoreKeeper.class).isEmpty())  
             {  
                 ScoreKeeper keeper = (ScoreKeeper)getObjects(ScoreKeeper.class).get(0);  
                 finalScore=keeper.getScore(); //Final score at the end of the game. 
             }
+            
             Message m = new Message("Game Over");
-            addObject(m,200,300);
+            addObject(m,200,250);
             Message m1 = new Message("Your Score: "+finalScore);
-            addObject(m1,200,330);
+            addObject(m1,200,300);
+            Message m2;
+            if(finalScore > highScore)
+            {
+                m2 = new Message("High Score : "+finalScore);
+            }
+            else
+            {
+                 m2 = new Message("High Score : "+highScore);
+            }
+            addObject(m2,200,350);
             removeObjects(getObjects(Doodler.class));
             removeObjects(getObjects(Ground.class));
             removeObjects(getObjects(ScoreKeeper.class));
-            if(!soundPlayed) {
+            if(!soundPlayed) 
+            {
                 Greenfoot.playSound("Gameover.mp3");
                 soundPlayed = true;
             }
@@ -86,6 +105,44 @@ public class DoodleWorld extends World
     public void gameOver()
     {
         gameOver=true;
+        ScoreKeeper keeper = (ScoreKeeper)getObjects(ScoreKeeper.class).get(0);  
+        finalScore=keeper.getScore(); //Final score at the end of the game. 
+        if(finalScore > 0)
+            {
+                try
+                {
+                    if(finalScore > highScore)
+                    {
+                        BufferedWriter bw = new BufferedWriter(new FileWriter("scores.txt"));
+                        bw.write(String.valueOf(finalScore));
+                        bw.newLine();
+                        bw.close();
+                    }
+                }
+                catch(Exception e)
+                {
+                    System.out.println("Exception in write: "+e);
+                }
+            }
+    }
+    
+    public void readScores()
+    {
+        try
+        {
+            BufferedReader in = new BufferedReader(new FileReader("scores.txt"));
+            String str = in.readLine();
+            while (str != null && !str.isEmpty() && str != "" && str != " ")
+            {
+                   highScore = Integer.parseInt(str);
+                   str = in.readLine();
+            }
+            in.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println("Exception in read" +e);
+        }
     }
 }
 

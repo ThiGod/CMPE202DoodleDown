@@ -1,4 +1,6 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import greenfoot.*; 
+import java.awt.Font;
+import java.awt.Color; // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
  * Write a description of class Message here.
@@ -9,7 +11,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Message extends Actor
 {
     public Message(String t) {
-        GreenfootImage gfi = new GreenfootImage(t, 25, java.awt.Color.black, java.awt.Color.white);
+        GreenfootImage gfi = new GreenfootImage(t, 30, java.awt.Color.blue, java.awt.Color.white);
         this.setImage(gfi);
     }
     

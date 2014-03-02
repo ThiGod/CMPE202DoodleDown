@@ -1,4 +1,5 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import greenfoot.*;
+import java.awt.Font;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
  * Write a description of class ScoreKeeper here.
@@ -16,11 +17,13 @@ public class ScoreKeeper extends Actor
     private static int CHECKPOINT =20 ; 
     private int score=0;
     GreenfootImage gfi;
-   
+    
     public void act() 
     {
         int moveSpeed=1; //World go up speed
+
         gfi = new GreenfootImage("Score: "+score, 25, java.awt.Color.black, java.awt.Color.white);
+        
         if(timer!=CHECKPOINT){
             timer++;
         }
