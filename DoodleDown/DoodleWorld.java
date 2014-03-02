@@ -14,6 +14,7 @@ public class DoodleWorld extends World
     private static int CHECKPOINT = 80; 
     private boolean gameOver=false;
     private boolean soundPlayed=false;
+    private int finalScore=0;
     
     /**
      * Constructor for objects of class DoodleWorld.
@@ -40,12 +41,13 @@ public class DoodleWorld extends World
         addObject(ground2, 306, 238);
         Ground ground3 = new Ground();
         addObject(ground3, 183, 338);
+        ScoreKeeper score=new ScoreKeeper();
+        addObject(score, 345,12);
     }
     
  
     public void act()
-    {
-
+    {   
         if(gameOver==false)
         {
              if (timer != CHECKPOINT) 
@@ -56,10 +58,18 @@ public class DoodleWorld extends World
                 }
          }
         else{
+            if (!getObjects(ScoreKeeper.class).isEmpty())  
+            {  
+                ScoreKeeper keeper = (ScoreKeeper)getObjects(ScoreKeeper.class).get(0);  
+                finalScore=keeper.getScore(); //Final score at the end of the game. 
+            }
             Message m = new Message("Game Over");
             addObject(m,200,300);
+            Message m1 = new Message("Your Score: "+finalScore);
+            addObject(m1,200,330);
             removeObjects(getObjects(Doodler.class));
             removeObjects(getObjects(Ground.class));
+            removeObjects(getObjects(ScoreKeeper.class));
             if(!soundPlayed) {
                 Greenfoot.playSound("Gameover.mp3");
                 soundPlayed = true;
@@ -67,8 +77,6 @@ public class DoodleWorld extends World
         }
     
     }
-    
-  
     
     public void addGround()
     {
