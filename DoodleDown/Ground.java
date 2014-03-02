@@ -31,4 +31,7 @@ public class Ground extends Actor
             getWorld().removeObject(this);
         }
     }
+    public int getSpeed(){
+        return moveSpeed;
+    }
 }
