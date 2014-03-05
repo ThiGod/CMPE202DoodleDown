@@ -101,7 +101,13 @@ public class DoodleWorld extends World
     
     public void addGround()
     {
-        addObject(new RegularGround(), Greenfoot.getRandomNumber(doodleWorldWide), doodleWorldHeight);  
+        int randomNumber = 0;
+        randomNumber = Greenfoot.getRandomNumber(10);
+        if(randomNumber == 0 || randomNumber == 1) {
+            addObject(new DeadGround(), Greenfoot.getRandomNumber(doodleWorldWide), doodleWorldHeight);
+        } else {
+            addObject(new RegularGround(), Greenfoot.getRandomNumber(doodleWorldWide), doodleWorldHeight);
+        }
     }
     
     public void gameOver()

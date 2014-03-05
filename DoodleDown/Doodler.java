@@ -84,7 +84,7 @@ public class Doodler extends Actor
     }
     
     public boolean onGround() {
-        Actor under = getOneObjectAtOffset(0, (doodleHeight/2), Ground.class);
+        Actor under = getOneObjectAtOffset(0, (doodleHeight/2), RegularGround.class);
         if(under != null){
             soundPlayed = false;
         }
