@@ -19,6 +19,8 @@ public class DoodleWorld extends World
 
     //for loading the highscore
     private int highScore=0;
+    public int doodleWorldWide = 400;
+    public int doodleWorldHeight = 600;
     
     /**
      * Constructor for objects of class DoodleWorld.
@@ -40,11 +42,11 @@ public class DoodleWorld extends World
     {
         Doodler doodler = new Doodler();
         addObject(doodler, 175, 34);
-        Ground ground = new Ground();
+        Ground ground = new RegularGround();
         addObject(ground, 162, 129);
-        Ground ground2 = new Ground();
+        Ground ground2 = new RegularGround();
         addObject(ground2, 306, 238);
-        Ground ground3 = new Ground();
+        Ground ground3 = new RegularGround();
         addObject(ground3, 183, 338);
         ScoreKeeper score=new ScoreKeeper();
         addObject(score, 345,12);
@@ -72,9 +74,9 @@ public class DoodleWorld extends World
             }
             
             Message m = new Message("Game Over");
-            addObject(m,200,250);
+            addObject(m,(doodleWorldWide/2),(doodleWorldHeight/2-50));
             Message m1 = new Message("Your Score: "+finalScore);
-            addObject(m1,200,300);
+            addObject(m1,(doodleWorldWide/2),(doodleWorldHeight/2));
             Message m2;
             if(finalScore > highScore)
             {
@@ -84,7 +86,7 @@ public class DoodleWorld extends World
             {
                  m2 = new Message("High Score : "+highScore);
             }
-            addObject(m2,200,350);
+            addObject(m2,(doodleWorldWide/2),(doodleWorldHeight/2+50));
             removeObjects(getObjects(Doodler.class));
             removeObjects(getObjects(Ground.class));
             removeObjects(getObjects(ScoreKeeper.class));
@@ -99,7 +101,7 @@ public class DoodleWorld extends World
     
     public void addGround()
     {
-        addObject(new Ground(), Greenfoot.getRandomNumber(400), 600);  
+        addObject(new RegularGround(), Greenfoot.getRandomNumber(doodleWorldWide), doodleWorldHeight);  
     }
     
     public void gameOver()

@@ -8,12 +8,19 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Doodler extends Actor
 {
-    private int speed = 8; //Doodler honrizontal speed
-    private int fallSpeed = 0; //Doodler falling speed
-    private int moveSpeed = 1; //World go up speed
-    private int acceleration = 1; //Doodler falling speed acceleration
+    private int moveHorizontalSpeed = 8; //Doodler honrizontal speed
+    private int fallingSpeed = 0; //Doodler falling speed
+    private int worldMoveUpSpeed = 1; //World go up speed
+    private int worldMoveUpAcceleration = 1;
+    private int fallingAcceleration = 1; //Doodler falling speed acceleration
     public boolean game = false; //Check the game is done or not
     public boolean soundPlayed = false; //Check whether the sound has played or not.
+    private int doodleWorldWide = 400;
+    private int doodleWorldHeight = 600;
+    private int doodleWide = 40;
+    private int doodleHeight = 40;
+    private int timer = 0;
+    private static int CHECKPOINT = 100;
     
     /**
      * Act - do whatever the Doodler wants to do. This method is called whenever
@@ -22,7 +29,7 @@ public class Doodler extends Actor
     public void act() 
     {
         if(checkDeath()) {
-            moveUp();
+            worldMoveUp();
             checkKeys();
             checkFall();
         }
@@ -43,12 +50,21 @@ public class Doodler extends Actor
         }
     }
     
+    public void accelerationWorldSpeed() {
+        if(timer != CHECKPOINT) {
+            timer++;
+        } else {
+            worldMoveUpSpeed ++;
+            timer = 0;
+        }
+    }
+    
     public boolean checkDeath() {
         if(getY() == 0) {
             //getWorld().removeObject(this);
             return false;
         }
-        if(getY() == 599) {
+        if(getY() == (doodleWorldHeight-1)) {
             //getWorld().removeObject(this);
             return false;
         }
@@ -62,12 +78,13 @@ public class Doodler extends Actor
         return h;
     }
     
-    public void moveUp() {
-        setLocation(getX(), getY() - moveSpeed);
+    public void worldMoveUp() {
+        setLocation(getX(), getY() - worldMoveUpSpeed);
+        accelerationWorldSpeed();
     }
     
     public boolean onGround() {
-        Actor under = getOneObjectAtOffset(0, 20, Ground.class);
+        Actor under = getOneObjectAtOffset(0, (doodleHeight/2), Ground.class);
         if(under != null){
             soundPlayed = false;
         }
@@ -76,7 +93,7 @@ public class Doodler extends Actor
     
     public void checkFall() {
         if(onGround()) {
-            fallSpeed = 0;
+            fallingSpeed = 0;
         }
         else {
             fall();
@@ -88,15 +105,16 @@ public class Doodler extends Actor
             Greenfoot.playSound("Jump.mp3");
             soundPlayed = true;
         }
-        setLocation(getX(), getY() + fallSpeed);
-        fallSpeed = fallSpeed + acceleration;
+        setLocation(getX(), getY() + fallingSpeed);
+        fallingSpeed = fallingSpeed + fallingAcceleration;
     }
     
     public void moveLeft() {
-        setLocation(getX() - speed, getY());
+        setLocation(getX() - moveHorizontalSpeed, getY());
     }
     
     public void moveRight() {
-        setLocation(getX() + speed, getY());
+        setLocation(getX() + moveHorizontalSpeed, getY());
     }
+    
 }

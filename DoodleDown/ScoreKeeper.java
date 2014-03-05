@@ -20,7 +20,7 @@ public class ScoreKeeper extends Actor
     
     public void act() 
     {
-        int moveSpeed=1; //World go up speed
+        int worldMoveUpSpeed=1; //World go up speed
 
         gfi = new GreenfootImage("Score: "+score, 25, java.awt.Color.black, java.awt.Color.white);
         
@@ -32,9 +32,9 @@ public class ScoreKeeper extends Actor
             if (!getWorld().getObjects(Ground.class).isEmpty())  
             {  
                 Ground grd = (Ground)getWorld().getObjects(Ground.class).get(0);  
-                moveSpeed=grd.getSpeed();  
+                worldMoveUpSpeed=grd.getSpeed();  
             }  
-            addScore(moveSpeed);
+            addScore(worldMoveUpSpeed);
         }
         Actor ground=getOneObjectAtOffset(0,0,Ground.class);
         if(ground!=null){
@@ -42,8 +42,8 @@ public class ScoreKeeper extends Actor
         }
     }
     
-    public void addScore(int moveSpeed){
-        score=score+1*moveSpeed;
+    public void addScore(int worldMoveUpSpeed){
+        score=score+1*worldMoveUpSpeed;
         gfi.drawString("Score: "+score,getX(),getY());
         this.setImage(gfi);
     }
