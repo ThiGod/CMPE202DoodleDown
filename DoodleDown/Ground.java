@@ -10,8 +10,6 @@ public class Ground extends Actor
 {
     private int worldMoveUpSpeed = 1; //World go up speed
     private int worldMoveUpAcceleration = 1;
-    private int timer = 0;
-    private static int CHECKPOINT = 100;
     
     /**
      * Act - do whatever the Ground wants to do. This method is called whenever
@@ -22,9 +20,11 @@ public class Ground extends Actor
 
     }    
     
-    public void worldMoveUp() {
+    public void groundMoveUp() {
+        
+        int worldMoveUpSpeed=((DoodleWorld) getWorld()).getSpeed();
         setLocation(getX(), getY() - worldMoveUpSpeed);
-        accelerationWorldSpeed();
+        
     }
     
     public void checkGround() {
@@ -36,16 +36,6 @@ public class Ground extends Actor
         return worldMoveUpSpeed;
     }
     
-    public void accelerationWorldSpeed() {
-        if(timer != CHECKPOINT) {
-            timer++;
-        } else {
-            worldMoveUpSpeed ++;
-            timer = 0;
-        }
-    }
-    
-    public int getWorldMoveUpSpeed() {
-        return worldMoveUpSpeed;
-    }
+
+
 }

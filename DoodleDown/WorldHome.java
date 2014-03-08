@@ -15,9 +15,9 @@ public class WorldHome extends World
     public WorldHome()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(600, 400, 1); 
+        super(400, 600, 1); 
         PlayGame play = new PlayGame();
-        addObject(play, 290, 250);
+        addObject(play, 200, 390);
     }
     
     public void act()

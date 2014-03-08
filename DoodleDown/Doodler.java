@@ -10,8 +10,6 @@ public class Doodler extends Actor
 {
     private int moveHorizontalSpeed = 8; //Doodler honrizontal speed
     private int fallingSpeed = 0; //Doodler falling speed
-    private int worldMoveUpSpeed = 1; //World go up speed
-    private int worldMoveUpAcceleration = 1;
     private int fallingAcceleration = 1; //Doodler falling speed acceleration
     public boolean game = false; //Check the game is done or not
     public boolean soundPlayed = false; //Check whether the sound has played or not.
@@ -19,8 +17,8 @@ public class Doodler extends Actor
     private int doodleWorldHeight = 600;
     private int doodleWide = 40;
     private int doodleHeight = 40;
-    private int timer = 0;
-    private static int CHECKPOINT = 100;
+
+
     
     /**
      * Act - do whatever the Doodler wants to do. This method is called whenever
@@ -29,7 +27,7 @@ public class Doodler extends Actor
     public void act() 
     {
         if(checkDeath()) {
-            worldMoveUp();
+            doodlerMoveUp();
             checkKeys();
             checkFall();
         }
@@ -50,14 +48,6 @@ public class Doodler extends Actor
         }
     }
     
-    public void accelerationWorldSpeed() {
-        if(timer != CHECKPOINT) {
-            timer++;
-        } else {
-            worldMoveUpSpeed ++;
-            timer = 0;
-        }
-    }
     
     public boolean checkDeath() {
         if(getY() == 0) {
@@ -78,9 +68,9 @@ public class Doodler extends Actor
         return h;
     }
     
-    public void worldMoveUp() {
+    public void doodlerMoveUp() {
+        int worldMoveUpSpeed=((DoodleWorld) getWorld()).getSpeed();
         setLocation(getX(), getY() - worldMoveUpSpeed);
-        accelerationWorldSpeed();
     }
     
     public boolean onGround() {

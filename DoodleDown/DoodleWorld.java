@@ -13,10 +13,14 @@ public class DoodleWorld extends World
 
     private int timer = 0;  
     private static int CHECKPOINT = 80; 
+    private static int SPEEDCHECKPOINT = 500;
     private boolean gameOver=false;
     private boolean soundPlayed=false;
     private static int finalScore=0;
-
+    
+    private int worldMoveUpSpeed = 1; //World go up speed
+    private int worldMoveUpAcceleration = 1;
+    
     //for loading the highscore
     private int highScore=0;
     public int doodleWorldWide = 400;
@@ -57,13 +61,17 @@ public class DoodleWorld extends World
     public void act()
     {   
         if(gameOver==false)
-        {
-             if (timer != CHECKPOINT) 
+        {   //dynamically add ground 
+             if (timer % (CHECKPOINT/worldMoveUpSpeed)!=0) 
                 timer++;
-             else {
-                 timer=0;
+             else {         
+                 timer++;
                  addGround();
+
                 }
+              //speed up the whole world  
+              if (timer % SPEEDCHECKPOINT==0)
+              worldMoveUpSpeed ++;   
          }
         else
         {
@@ -132,6 +140,8 @@ public class DoodleWorld extends World
                     System.out.println("Exception in write: "+e);
                 }
             }
+        
+        timer=0;   //set global timer back to 0 
     }
     
     public void readScores()
@@ -152,5 +162,28 @@ public class DoodleWorld extends World
             System.out.println("Exception in read" +e);
         }
     }
+    
+    
+    
+    
+    
+    public int getTimer()
+    { 
+        return timer;
+    }
+    
+    public void setTimer(int i)
+    {
+     timer=i;
+    }
+    
+    public int getSpeed()
+    { 
+        return worldMoveUpSpeed;
+    }
+    
+    public void setSpeed(int i)
+    {
+     worldMoveUpSpeed=i;
+    }
 }
-

@@ -15,7 +15,7 @@ public class DeadGround extends Ground
     public void act() 
     {
         if(!getWorld().getObjects(Doodler.class).isEmpty()) {
-            worldMoveUp();
+            groundMoveUp();
             checkGround();
         }
     }    
