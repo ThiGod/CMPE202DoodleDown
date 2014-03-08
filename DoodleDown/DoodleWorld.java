@@ -81,6 +81,7 @@ public class DoodleWorld extends World
                 finalScore=keeper.getScore(); //Final score at the end of the game. 
             }
             
+            //Set Game Over screen
             Message m = new Message("Game Over");
             addObject(m,(doodleWorldWide/2),(doodleWorldHeight/2-50));
             Message m1 = new Message("Your Score: "+finalScore);
@@ -103,6 +104,9 @@ public class DoodleWorld extends World
                 Greenfoot.playSound("Gameover.mp3");
                 soundPlayed = true;
             }
+            
+            PlayGame play = new PlayGame();
+            addObject(play, (doodleWorldWide/2),(doodleWorldHeight/2-100));
         }
     
     }
