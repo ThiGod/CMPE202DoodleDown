@@ -21,7 +21,7 @@ public class ScoreKeeper extends Actor
     public void act() 
     {
         //int worldMoveUpSpeed=1; //World go up speed
-
+        if(((DoodleWorld)getWorld()).isPaused){return;} //do nothing if the game is paused
         gfi = new GreenfootImage("Score: "+score, 25, java.awt.Color.black, java.awt.Color.white);
         
         if(scoretimer!=SCORECHECKPOINT){

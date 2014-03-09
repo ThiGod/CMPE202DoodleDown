@@ -18,6 +18,7 @@ public class DoodleWorld extends World
     private boolean soundPlayed=false;
     private static int finalScore=0;
     
+    
     private int worldMoveUpSpeed = 1; //World go up speed
     private int worldMoveUpAcceleration = 1;
     
@@ -25,6 +26,7 @@ public class DoodleWorld extends World
     private int highScore=0;
     public int doodleWorldWide = 400;
     public int doodleWorldHeight = 600;
+    public boolean isPaused=false;
     
     /**
      * Constructor for objects of class DoodleWorld.
@@ -61,7 +63,10 @@ public class DoodleWorld extends World
     public void act()
     {   
         if(gameOver==false)
-        {   //dynamically add ground 
+        {   
+            checkPalse();
+            if(isPaused){return;} //do nothing if the game is paused
+            //dynamically add ground 
              if (timer % (CHECKPOINT/worldMoveUpSpeed)!=0) 
                 timer++;
              else {         
@@ -75,6 +80,7 @@ public class DoodleWorld extends World
          }
         else
         {
+            
             if (!getObjects(ScoreKeeper.class).isEmpty())  
             {  
                 ScoreKeeper keeper = (ScoreKeeper)getObjects(ScoreKeeper.class).get(0);  
@@ -109,6 +115,16 @@ public class DoodleWorld extends World
             addObject(play, (doodleWorldWide/2),(doodleWorldHeight/2-100));
         }
     
+    }
+    
+    private void checkPalse(){
+        if(Greenfoot.isKeyDown("space")) {
+            if(isPaused){
+                isPaused=false;
+            }else{
+                isPaused=true;
+            }
+        }
     }
     
     public void addGround()

@@ -27,6 +27,7 @@ public class Doodler extends Actor
      */
     public void act() 
     {
+        if(((DoodleWorld)getWorld()).isPaused){return;} //do nothing if the game is paused
         if(checkDeath()) {
             doodlerMoveUp();
             checkKeys();

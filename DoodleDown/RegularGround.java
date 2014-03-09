@@ -14,7 +14,7 @@ public class RegularGround extends Ground
      */
     public void act() 
     {
-        if(!getWorld().getObjects(Doodler.class).isEmpty()) {
+        if(!getWorld().getObjects(Doodler.class).isEmpty() && !((DoodleWorld)getWorld()).isPaused) {
             groundMoveUp();
             checkGround();
         }

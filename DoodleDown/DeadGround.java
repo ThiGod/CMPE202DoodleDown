@@ -14,9 +14,11 @@ public class DeadGround extends Ground
      */
     public void act() 
     {
-        if(!getWorld().getObjects(Doodler.class).isEmpty()) {
-            groundMoveUp();
-            checkGround();
-        }
-    }    
+        
+        if(!getWorld().getObjects(Doodler.class).isEmpty() && !((DoodleWorld)getWorld()).isPaused) {
+                groundMoveUp();
+                checkGround();
+       }
+    }
+       
 }
