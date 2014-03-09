@@ -19,39 +19,34 @@ public class Doodler extends Actor
     private int doodleHeight = 40;
     private String prevDirection="right"; //the last direction the doodler was facing to 
 
-
-    
     /**
      * Act - do whatever the Doodler wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     public void act() 
     {
-        if(((DoodleWorld)getWorld()).isPaused){return;} //do nothing if the game is paused
+        if(((DoodleWorld)getWorld()).isPaused){
+            return;
+        } //do nothing if the game is paused
         if(checkDeath()) {
             doodlerMoveUp();
             checkKeys();
             checkFall();
-        }
-        else 
-        { 
+        } else { 
            ((DoodleWorld)getWorld()).gameOver();
         }
     }    
     
     private void checkKeys() {
         if(Greenfoot.isKeyDown("left")) {
-            //setImage("doodler.png");
             turnAround("left");
             moveLeft();
         }
         if(Greenfoot.isKeyDown("right")) {
-            //setImage("doodler.png");
             turnAround("right");
             moveRight();
         }
     }
-    
     
     public boolean checkDeath() {
         if(getY() == 0) {
@@ -61,8 +56,7 @@ public class Doodler extends Actor
         if(getY() == (doodleWorldHeight-1)) {
             //getWorld().removeObject(this);
             return false;
-        }
-        else {
+        } else {
             return true;
         }
     }
@@ -77,18 +71,23 @@ public class Doodler extends Actor
         setLocation(getX(), getY() - worldMoveUpSpeed);
     }
     
-    public boolean onGround() {
+    public boolean onRegularGround() {
         Actor under = getOneObjectAtOffset(0, (doodleHeight/2), RegularGround.class);
-        
-        boolean onTop=under != null;
-        
+        boolean onTop = under != null;  
         if(onTop){
             soundPlayed = false;
-            alignDoodler(under); //make sure the doodler is on the surface of the ground
-        }
-        
-        
-        
+            alignDoodler(under); //make sure the doodler is on the surface of the regularGround
+        } 
+        return onTop;
+    }
+    
+    public boolean onBrickGround() {
+        Actor under = getOneObjectAtOffset(0, (doodleHeight/2), BrickGround.class);
+        boolean onTop = under != null;  
+        if(onTop){
+            soundPlayed = false;
+            alignDoodler(under); //make sure the doodler is on the surface of the regularGround
+        } 
         return onTop;
     }
     
@@ -104,10 +103,9 @@ public class Doodler extends Actor
     }
     
     public void checkFall() {
-        if(onGround()) {
+        if(onBrickGround()==true || onRegularGround()==true) {
             fallingSpeed = 0;
-        }
-        else {
+        } else {
             fall();
         }
     }

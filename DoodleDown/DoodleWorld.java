@@ -10,15 +10,13 @@ import java.io.*; //file manipulation (for score recording)
  */
 public class DoodleWorld extends World
 {
-
     private int timer = 0;  
     private static int CHECKPOINT = 80; 
     private static int SPEEDCHECKPOINT = 500;
     private boolean gameOver=false;
     private boolean soundPlayed=false;
     private static int finalScore=0;
-    
-    
+      
     private int worldMoveUpSpeed = 1; //World go up speed
     private int worldMoveUpAcceleration = 1;
     
@@ -56,55 +54,50 @@ public class DoodleWorld extends World
         addObject(ground3, 183, 338);
         ScoreKeeper score=new ScoreKeeper();
         addObject(score, 345,12);
-      
     }
     
  
     public void act()
     {   
-        if(gameOver==false)
-        {   
+        if(gameOver==false) {   
             checkPalse();
-            if(isPaused){return;} //do nothing if the game is paused
+            if(isPaused) {
+                return;
+            } //do nothing if the game is paused
             //dynamically add ground 
-             if (timer % (CHECKPOINT/worldMoveUpSpeed)!=0) 
+            if (timer % (CHECKPOINT/worldMoveUpSpeed)!=0) 
                 timer++;
-             else {         
-                 timer++;
-                 addGround();
-
-                }
-              //speed up the whole world  
-              if (timer % SPEEDCHECKPOINT==0)
-              worldMoveUpSpeed ++;   
-         }
-        else
-        {
-            
-            if (!getObjects(ScoreKeeper.class).isEmpty())  
-            {  
+            else {         
+                timer++;
+                addGround();
+            }
+            //speed up the whole world  
+            if (timer % SPEEDCHECKPOINT==0)
+                worldMoveUpSpeed ++;   
+        } else {
+            if (!getObjects(ScoreKeeper.class).isEmpty()) {  
                 ScoreKeeper keeper = (ScoreKeeper)getObjects(ScoreKeeper.class).get(0);  
                 finalScore=keeper.getScore(); //Final score at the end of the game. 
             }
-            
+        
             //Set Game Over screen
             Message m = new Message("Game Over");
             addObject(m,(doodleWorldWide/2),(doodleWorldHeight/2-50));
             Message m1 = new Message("Your Score: "+finalScore);
             addObject(m1,(doodleWorldWide/2),(doodleWorldHeight/2));
             Message m2;
-            if(finalScore > highScore)
-            {
+        
+            if(finalScore > highScore) {
                 m2 = new Message("High Score : "+finalScore);
+            } else {
+                m2 = new Message("High Score : "+highScore);
             }
-            else
-            {
-                 m2 = new Message("High Score : "+highScore);
-            }
+            
             addObject(m2,(doodleWorldWide/2),(doodleWorldHeight/2+50));
             removeObjects(getObjects(Doodler.class));
             removeObjects(getObjects(Ground.class));
             removeObjects(getObjects(ScoreKeeper.class));
+        
             if(!soundPlayed) 
             {
                 Greenfoot.playSound("Gameover.mp3");
@@ -114,14 +107,14 @@ public class DoodleWorld extends World
             PlayGame play = new PlayGame();
             addObject(play, (doodleWorldWide/2),(doodleWorldHeight/2-100));
         }
-    
     }
     
-    private void checkPalse(){
+    private void checkPalse()
+    {
         if(Greenfoot.isKeyDown("space")) {
             if(isPaused){
                 isPaused=false;
-            }else{
+            } else{
                 isPaused=true;
             }
         }
@@ -130,12 +123,27 @@ public class DoodleWorld extends World
     public void addGround()
     {
         int randomNumber = 0;
-        randomNumber = Greenfoot.getRandomNumber(10);
-        if(randomNumber == 0 || randomNumber == 1) {
-            addObject(new DeadGround(), Greenfoot.getRandomNumber(doodleWorldWide), doodleWorldHeight);
-        } else {
-            addObject(new RegularGround(), Greenfoot.getRandomNumber(doodleWorldWide), doodleWorldHeight);
-        }
+        randomNumber = Greenfoot.getRandomNumber(6);
+        switch(randomNumber) {
+            case 0:
+                addObject(new DeadGround(), Greenfoot.getRandomNumber(doodleWorldWide), doodleWorldHeight);
+                break;
+            case 1:
+                addObject(new BrickGround(), Greenfoot.getRandomNumber(doodleWorldWide), doodleWorldHeight);
+                break;
+            case 2:
+                addObject(new BrickGround(), Greenfoot.getRandomNumber(doodleWorldWide), doodleWorldHeight);
+                break;
+            case 3:
+                addObject(new RegularGround(), Greenfoot.getRandomNumber(doodleWorldWide), doodleWorldHeight);
+                break;
+            case 4:
+                addObject(new RegularGround(), Greenfoot.getRandomNumber(doodleWorldWide), doodleWorldHeight);
+                break;
+            case 5:
+                addObject(new RegularGround(), Greenfoot.getRandomNumber(doodleWorldWide), doodleWorldHeight);
+                break;
+            }
     }
     
     public void gameOver()
@@ -143,51 +151,36 @@ public class DoodleWorld extends World
         gameOver=true;
         ScoreKeeper keeper = (ScoreKeeper)getObjects(ScoreKeeper.class).get(0);  
         finalScore=keeper.getScore(); //Final score at the end of the game. 
-        if(finalScore > 0)
-            {
-                try
-                {
-                    if(finalScore > highScore)
-                    {
-                        //save the high score to the log file
-                        BufferedWriter bw = new BufferedWriter(new FileWriter("scores.txt"));
-                        bw.write(String.valueOf(finalScore));
-                        bw.newLine();
-                        bw.close();
-                    }
+        if(finalScore > 0) {
+            try {
+                if(finalScore > highScore) {
+                    //save the high score to the log file
+                    BufferedWriter bw = new BufferedWriter(new FileWriter("scores.txt"));
+                    bw.write(String.valueOf(finalScore));
+                    bw.newLine();
+                    bw.close();
                 }
-                catch(Exception e)
-                {
-                    System.out.println("Exception in write: "+e);
-                }
+            } catch(Exception e) {
+                System.out.println("Exception in write: "+e);
             }
-        
+        } 
         timer=0;   //set global timer back to 0 
     }
     
     public void readScores()
     {
-        try
-        {
+        try {
             BufferedReader in = new BufferedReader(new FileReader("scores.txt"));
             String str = in.readLine();
-            while (str != null && !str.isEmpty() && str != "" && str != " ")
-            {
-                    
+            while (str != null && !str.isEmpty() && str != "" && str != " ") {
                    highScore = Integer.parseInt(str);
                    str = in.readLine();
             }
             in.close();
-        }
-        catch(Exception e)
-        {
+        } catch(Exception e) {
             System.out.println("Exception in read" +e);
         }
     }
-    
-    
-    
-    
     
     public int getTimer()
     { 
@@ -196,16 +189,16 @@ public class DoodleWorld extends World
     
     public void setTimer(int i)
     {
-     timer=i;
+        timer=i;
     }
     
     public int getSpeed()
-    { 
+    {
         return worldMoveUpSpeed;
     }
     
     public void setSpeed(int i)
     {
-     worldMoveUpSpeed=i;
+        worldMoveUpSpeed=i;
     }
 }
