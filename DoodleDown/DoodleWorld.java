@@ -1,5 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-import java.io.*;
+import java.io.*; //file manipulation (for score recording)
 //import java.util.*;
 
 /**
@@ -133,6 +133,7 @@ public class DoodleWorld extends World
                 {
                     if(finalScore > highScore)
                     {
+                        //save the high score to the log file
                         BufferedWriter bw = new BufferedWriter(new FileWriter("scores.txt"));
                         bw.write(String.valueOf(finalScore));
                         bw.newLine();
@@ -156,6 +157,7 @@ public class DoodleWorld extends World
             String str = in.readLine();
             while (str != null && !str.isEmpty() && str != "" && str != " ")
             {
+                    
                    highScore = Integer.parseInt(str);
                    str = in.readLine();
             }

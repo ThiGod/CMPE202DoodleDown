@@ -8,8 +8,6 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Ground extends Actor
 {
-    private int worldMoveUpSpeed = 1; //World go up speed
-    private int worldMoveUpAcceleration = 1;
     
     /**
      * Act - do whatever the Ground wants to do. This method is called whenever
@@ -32,10 +30,6 @@ public class Ground extends Actor
             getWorld().removeObject(this);
         }
     }
-    public int getSpeed(){
-        return worldMoveUpSpeed;
-    }
-    
 
 
 }
