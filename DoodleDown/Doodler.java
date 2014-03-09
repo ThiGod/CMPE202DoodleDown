@@ -17,6 +17,7 @@ public class Doodler extends Actor
     private int doodleWorldHeight = 600;
     private int doodleWide = 40;
     private int doodleHeight = 40;
+    private String prevDirection="right"; //the last direction the doodler was facing to 
 
 
     
@@ -40,10 +41,12 @@ public class Doodler extends Actor
     private void checkKeys() {
         if(Greenfoot.isKeyDown("left")) {
             //setImage("doodler.png");
+            turnAround("left");
             moveLeft();
         }
         if(Greenfoot.isKeyDown("right")) {
             //setImage("doodler.png");
+            turnAround("right");
             moveRight();
         }
     }
@@ -75,10 +78,24 @@ public class Doodler extends Actor
     
     public boolean onGround() {
         Actor under = getOneObjectAtOffset(0, (doodleHeight/2), RegularGround.class);
-        if(under != null){
+
+        boolean onTop=under != null;
+        
+        if(onTop){
+         if((getY()+doodleHeight/2)<600){
+            System.out.println("blue:"+getImage().getColorAt(0,doodleHeight-1));
+           //int blue = getWorld().getColorAt(getX(),getY()+doodleHeight/2).getBlue(); //a working-around to avoid landing on "air"
+          }
             soundPlayed = false;
         }
-        return under != null;
+        return onTop;
+    }
+    
+    private void turnAround(String direction){
+        if(prevDirection!=direction){
+            prevDirection=direction;
+            getImage().mirrorHorizontally();
+        }
     }
     
     public void checkFall() {
