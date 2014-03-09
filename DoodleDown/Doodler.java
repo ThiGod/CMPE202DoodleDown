@@ -78,17 +78,21 @@ public class Doodler extends Actor
     
     public boolean onGround() {
         Actor under = getOneObjectAtOffset(0, (doodleHeight/2), RegularGround.class);
-
+        
         boolean onTop=under != null;
         
         if(onTop){
-         if((getY()+doodleHeight/2)<600){
-            System.out.println("blue:"+getImage().getColorAt(0,doodleHeight-1));
-           //int blue = getWorld().getColorAt(getX(),getY()+doodleHeight/2).getBlue(); //a working-around to avoid landing on "air"
-          }
             soundPlayed = false;
+            alignDoodler(under); //make sure the doodler is on the surface of the ground
         }
+        
+        
+        
         return onTop;
+    }
+    
+    private void alignDoodler(Actor ground){
+        setLocation(getX(), ground.getY()-ground.getImage().getHeight()/2-10);
     }
     
     private void turnAround(String direction){
