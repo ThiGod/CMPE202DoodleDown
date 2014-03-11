@@ -12,7 +12,7 @@ public class DoodleWorld extends World
 {
     private int timer = 0;  
     private static int CHECKPOINT = 80; 
-    private static int SPEEDCHECKPOINT = 500;
+    private static int SPEEDCHECKPOINT = 600;
     private boolean gameOver=false;
     private boolean soundPlayed=false;
     private static int finalScore=0;
@@ -72,8 +72,8 @@ public class DoodleWorld extends World
                 addGround();
             }
             //speed up the whole world  
-            if (timer % SPEEDCHECKPOINT==0)
-                worldMoveUpSpeed ++;   
+            if (timer % SPEEDCHECKPOINT == 0)
+                worldMoveUpSpeed++;   
         } else {
             if (!getObjects(ScoreKeeper.class).isEmpty()) {  
                 ScoreKeeper keeper = (ScoreKeeper)getObjects(ScoreKeeper.class).get(0);  

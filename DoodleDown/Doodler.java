@@ -83,7 +83,7 @@ public class Doodler extends Actor
     
     public boolean onBrickGround() {
         Actor under = getOneObjectAtOffset(0, (doodleHeight/2), BrickGround.class);
-        boolean onTop = under != null;  
+        boolean onTop = under != null; 
         if(onTop){
             soundPlayed = false;
             alignDoodler(under); //make sure the doodler is on the surface of the regularGround
