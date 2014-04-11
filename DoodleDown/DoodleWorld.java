@@ -1,6 +1,6 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.io.*; //file manipulation (for score recording)
-//import java.util.*;
+import java.util.*;
 
 /**
  * Write a description of class DoodleWorld here.
@@ -8,11 +8,11 @@ import java.io.*; //file manipulation (for score recording)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class DoodleWorld extends World
+public abstract class DoodleWorld extends World
 {
     private int timer = 0;  
     private static int CHECKPOINT = 80; 
-    private static int SPEEDCHECKPOINT = 600;
+    private static int SPEEDCHECKPOINT = 500;
     private boolean gameOver=false;
     private boolean soundPlayed=false;
     private static int finalScore=0;
@@ -32,31 +32,37 @@ public class DoodleWorld extends World
      */
     public DoodleWorld()
     {    
-        // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
+        
         super(400, 600, 1); 
         prepare();
         readScores();
     }
 
+    public abstract Ground getRegularGround();
+    public abstract ArrayList<Ground> getSpecialGrounds();
+    
     /**
      * Prepare the world for the start of the program. That is: create the initial
      * objects and add them to the world.
      */
     private void prepare()
     {
+        GreenfootImage image = getBackground();  
+        image.scale(400, 600);  
+        setBackground(image); 
         Doodler doodler = new Doodler();
         addObject(doodler, 175, 34);
-        Ground ground = new RegularGround();
+        Ground ground = getRegularGround();
         addObject(ground, 162, 129);
-        Ground ground2 = new RegularGround();
+        Ground ground2 = getRegularGround();
         addObject(ground2, 306, 238);
-        Ground ground3 = new RegularGround();
+        Ground ground3 = getRegularGround();
         addObject(ground3, 183, 338);
         ScoreKeeper score=new ScoreKeeper();
         addObject(score, 345,12);
     }
     
- 
+     
     public void act()
     {   
         if(gameOver==false) {   
@@ -72,8 +78,8 @@ public class DoodleWorld extends World
                 addGround();
             }
             //speed up the whole world  
-            if (timer % SPEEDCHECKPOINT == 0)
-                worldMoveUpSpeed++;   
+            if (timer % SPEEDCHECKPOINT==0)
+                worldMoveUpSpeed ++;   
         } else {
             if (!getObjects(ScoreKeeper.class).isEmpty()) {  
                 ScoreKeeper keeper = (ScoreKeeper)getObjects(ScoreKeeper.class).get(0);  
@@ -104,8 +110,12 @@ public class DoodleWorld extends World
                 soundPlayed = true;
             }
             
-            PlayGame play = new PlayGame();
-            addObject(play, (doodleWorldWide/2),(doodleWorldHeight/2-100));
+            PlayGame play1 = new PlayBlueSky();
+            addObject(play1, (doodleWorldWide/2),(doodleWorldHeight/2-100));
+            PlayGame play2 = new PlayDeepOcean();
+            addObject(play2, (doodleWorldWide/2-80),(doodleWorldHeight/2-170));
+            PlayGame play3 = new PlayOuterSpace();
+            addObject(play3, (doodleWorldWide/2+80),(doodleWorldHeight/2-170));
         }
     }
     
@@ -124,24 +134,26 @@ public class DoodleWorld extends World
     {
         int randomNumber = 0;
         randomNumber = Greenfoot.getRandomNumber(6);
+        ArrayList<Ground> specialgrounds= getSpecialGrounds();
+        int i=specialgrounds.size()-1;
         switch(randomNumber) {
             case 0:
-                addObject(new DeadGround(), Greenfoot.getRandomNumber(doodleWorldWide), doodleWorldHeight);
+                addObject(specialgrounds.get(0), Greenfoot.getRandomNumber(doodleWorldWide), doodleWorldHeight);
                 break;
             case 1:
-                addObject(new BrickGround(), Greenfoot.getRandomNumber(doodleWorldWide), doodleWorldHeight);
+                addObject(specialgrounds.get(1), Greenfoot.getRandomNumber(doodleWorldWide), doodleWorldHeight);
                 break;
             case 2:
-                addObject(new BrickGround(), Greenfoot.getRandomNumber(doodleWorldWide), doodleWorldHeight);
+                addObject(specialgrounds.get(i), Greenfoot.getRandomNumber(doodleWorldWide), doodleWorldHeight);
                 break;
             case 3:
-                addObject(new RegularGround(), Greenfoot.getRandomNumber(doodleWorldWide), doodleWorldHeight);
+                addObject(getRegularGround(), Greenfoot.getRandomNumber(doodleWorldWide), doodleWorldHeight);
                 break;
             case 4:
-                addObject(new RegularGround(), Greenfoot.getRandomNumber(doodleWorldWide), doodleWorldHeight);
+                addObject(getRegularGround(), Greenfoot.getRandomNumber(doodleWorldWide), doodleWorldHeight);
                 break;
             case 5:
-                addObject(new RegularGround(), Greenfoot.getRandomNumber(doodleWorldWide), doodleWorldHeight);
+                addObject(getRegularGround(), Greenfoot.getRandomNumber(doodleWorldWide), doodleWorldHeight);
                 break;
             }
     }

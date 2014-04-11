@@ -6,17 +6,22 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class BrickGround extends Ground
+public class BrickGround extends SpecialGround
 {
-    /**
-     * Act - do whatever the BrickGround wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
-    public void act() 
-    {
-       if(!getWorld().getObjects(Doodler.class).isEmpty() && !((DoodleWorld)getWorld()).isPaused) {
-                groundMoveUp();
-                checkTimerGround();
-       }
-    }    
+    private int timer = 0;  
+    private static int CHECKPOINT = Greenfoot.getRandomNumber(25) + 60;
+    
+    public void checkGround() {
+        CHECKPOINT = Greenfoot.getRandomNumber(25) + 60;
+        if(getY() == 0) {
+            getWorld().removeObject(this);
+        }
+        if(timer != CHECKPOINT) {
+            timer++;
+        } else {
+            getWorld().removeObject(this);
+            timer = 0;
+            CHECKPOINT = 0;
+        }
+    } 
 }

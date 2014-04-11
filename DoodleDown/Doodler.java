@@ -71,22 +71,12 @@ public class Doodler extends Actor
         setLocation(getX(), getY() - worldMoveUpSpeed);
     }
     
-    public boolean onRegularGround() {
-        Actor under = getOneObjectAtOffset(0, (doodleHeight/2), RegularGround.class);
-        boolean onTop = under != null;  
+    public boolean onGround() {
+        Actor under = getOneObjectAtOffset(0, (doodleHeight/2), Ground.class);
+        boolean onTop = (under != null && under.getClass()!= DeadGround.class);  
         if(onTop){
             soundPlayed = false;
-            alignDoodler(under); //make sure the doodler is on the surface of the regularGround
-        } 
-        return onTop;
-    }
-    
-    public boolean onBrickGround() {
-        Actor under = getOneObjectAtOffset(0, (doodleHeight/2), BrickGround.class);
-        boolean onTop = under != null; 
-        if(onTop){
-            soundPlayed = false;
-            alignDoodler(under); //make sure the doodler is on the surface of the regularGround
+            alignDoodler(under); //make sure the doodler is on the surface of the Ground
         } 
         return onTop;
     }
@@ -103,7 +93,7 @@ public class Doodler extends Actor
     }
     
     public void checkFall() {
-        if(onBrickGround()==true || onRegularGround()==true) {
+        if(onGround()==true) {
             fallingSpeed = 0;
         } else {
             fall();

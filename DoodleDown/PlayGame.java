@@ -8,17 +8,9 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class PlayGame extends Actor
 {
-    /**
-     * Act - do whatever the PlayGame wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
-    public void act() 
-    {
-        // Add your action code here.
-        if(Greenfoot.mouseClicked(this))
-        {
-            DoodleWorld dworld = new DoodleWorld();
-            Greenfoot.setWorld(dworld);
-        }
-    }    
+    public PlayGame(){
+        GreenfootImage image = getImage();  
+        image.scale(150, 60);  
+        setImage(image); 
+    }
 }

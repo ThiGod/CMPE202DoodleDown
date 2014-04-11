@@ -12,11 +12,11 @@ public class RegularGround extends Ground
      * Act - do whatever the RegularGround wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
-    public void act() 
-    {
-        if(!getWorld().getObjects(Doodler.class).isEmpty() && !((DoodleWorld)getWorld()).isPaused) {
-            groundMoveUp();
-            checkGround();
-        }
-    }    
+    public RegularGround(){
+        GreenfootImage image = getImage();  
+        image.scale(150, 30);  
+        setImage(image); 
+    }
+     
+
 }
