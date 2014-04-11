@@ -15,6 +15,7 @@ public abstract class DoodleWorld extends World
     private static int SPEEDCHECKPOINT = 500;
     private boolean gameOver=false;
     private boolean soundPlayed=false;
+    private boolean endScreenShowed=false;
     private static int finalScore=0;
       
     private int worldMoveUpSpeed = 1; //World go up speed
@@ -80,7 +81,8 @@ public abstract class DoodleWorld extends World
             //speed up the whole world  
             if (timer % SPEEDCHECKPOINT==0)
                 worldMoveUpSpeed ++;   
-        } else {
+        } 
+        else if (!endScreenShowed) {
             if (!getObjects(ScoreKeeper.class).isEmpty()) {  
                 ScoreKeeper keeper = (ScoreKeeper)getObjects(ScoreKeeper.class).get(0);  
                 finalScore=keeper.getScore(); //Final score at the end of the game. 
@@ -116,6 +118,8 @@ public abstract class DoodleWorld extends World
             addObject(play2, (doodleWorldWide/2-80),(doodleWorldHeight/2-170));
             PlayGame play3 = new PlayOuterSpace();
             addObject(play3, (doodleWorldWide/2+80),(doodleWorldHeight/2-170));
+            
+            endScreenShowed=true;
         }
     }
     
