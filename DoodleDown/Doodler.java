@@ -73,11 +73,33 @@ public class Doodler extends Actor
     
     public boolean onGround() {
         Actor under = getOneObjectAtOffset(0, (doodleHeight/2), Ground.class);
-        boolean onTop = (under != null && under.getClass()!= DeadGround.class);  
+        boolean onTop = (under!=null && under.getClass() != DeadGround.class);  
+        
         if(onTop){
             soundPlayed = false;
             alignDoodler(under); //make sure the doodler is on the surface of the Ground
-        } 
+        }
+        if (under!=null){
+            
+            if( under.getClass()== BlackHoleGround.class){
+                setLocation(Greenfoot.getRandomNumber(doodleWorldWide-10), Greenfoot.getRandomNumber(doodleWorldHeight-10));
+            }
+            
+            if (under.getClass()== HeatingGround.class || under.getClass()== MuddyGround.class){
+                //set the horizontalState to slowHorizontalState
+                //in this state, we can also add some effect pic around doodler
+            }
+            
+            if (under.getClass()== IceGround.class ){
+               //set the horizontalState to fastHorizontalState
+               //in this state, we can also add some effect pic around doodler
+            }
+
+            if (under.getClass()== ToxicGround.class){
+                //set the horizontalState to stalkedHorizontalState
+                //in this state, we can also add some effect pic around doodler
+            }
+        }
         return onTop;
     }
     
