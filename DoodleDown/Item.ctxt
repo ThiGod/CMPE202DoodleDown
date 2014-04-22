@@ -1,0 +1,14 @@
+#BlueJ class context
+comment0.params=
+comment0.target=void\ act()
+comment1.params=
+comment1.target=void\ moveUp()
+comment2.params=
+comment2.target=void\ checkBoundary()
+comment3.params=
+comment3.target=void\ effectTimeCountDown()
+comment4.params=d
+comment4.target=void\ startEffect(Doodler)
+comment5.params=
+comment5.target=void\ stopEffect()
+numComments=6

@@ -8,16 +8,27 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Doodler extends Actor
 {
-    private int moveHorizontalSpeed = 8; //Doodler honrizontal speed
+    public int moveHorizontalSpeed = 8; //Doodler honrizontal speed
     private int fallingSpeed = 0; //Doodler falling speed
     private int fallingAcceleration = 1; //Doodler falling speed acceleration
     public boolean game = false; //Check the game is done or not
     public boolean soundPlayed = false; //Check whether the sound has played or not.
     private int doodleWorldWide = 400;
-    private int doodleWorldHeight = 600;
+    public int doodleWorldHeight = 600;
     private int doodleWide = 40;
     private int doodleHeight = 40;
     private String prevDirection="right"; //the last direction the doodler was facing to 
+    public Item currentItem;
+    
+    
+    private IMovingState normalMovingState = new NormalMovingState(this);
+    private IMovingState oppositeMovingState = new OppositeMovingState(this);
+    public IMovingState currentMovingState = normalMovingState;
+    
+    private IProtectionState unprotectedState = new UnprotectedState(this);
+    private IProtectionState protectedState = new ProtectedState(this);
+    public IProtectionState currentProtectionState = unprotectedState;    
+    
 
     /**
      * Act - do whatever the Doodler wants to do. This method is called whenever
@@ -32,6 +43,7 @@ public class Doodler extends Actor
             doodlerMoveUp();
             checkKeys();
             checkFall();
+            checkItems();
         } else { 
            ((DoodleWorld)getWorld()).gameOver();
         }
@@ -49,16 +61,23 @@ public class Doodler extends Actor
     }
     
     public boolean checkDeath() {
-        if(getY() == 0) {
-            //getWorld().removeObject(this);
-            return false;
-        }
-        if(getY() == (doodleWorldHeight-1)) {
-            //getWorld().removeObject(this);
-            return false;
-        } else {
-            return true;
-        }
+        return currentProtectionState.doCheckDeath();
+    }
+    
+    public void setFallingSpeed(int s){
+        fallingSpeed = s;
+    }
+    
+    public int getFallingSpeed(){
+        return fallingSpeed;
+    }
+    
+    public void setHorizontalSpeed(int s){
+        moveHorizontalSpeed = s;
+    }
+    
+    public int getHorizontalSpeed(){
+        return moveHorizontalSpeed;
     }
     
     public int returnHeight() {
@@ -103,6 +122,15 @@ public class Doodler extends Actor
         return onTop;
     }
     
+    public void checkItems(){
+        Actor item = getOneObjectAtOffset(0, (doodleHeight/2), Item.class);
+        if(item != null){
+            if (!((Item)item).isActivated){
+                ((Item)item).startEffect(this);
+            }
+        }
+    }
+    
     private void alignDoodler(Actor ground){
         setLocation(getX(), ground.getY()-ground.getImage().getHeight()/2-10);
     }
@@ -132,11 +160,42 @@ public class Doodler extends Actor
     }
     
     public void moveLeft() {
-        setLocation(getX() - moveHorizontalSpeed, getY());
+        currentMovingState.doMoveLeft();
     }
     
     public void moveRight() {
-        setLocation(getX() + moveHorizontalSpeed, getY());
+        currentMovingState.doMoveRight();
     }
     
+    public void setWorldSpeed(int speed)
+    {
+        ((DoodleWorld) getWorld()).setSpeed(speed);
+    }
+    
+    public void setMovingState(EMovingStates stateName)
+    {
+        switch(stateName){
+            case NORMAL: 
+                currentMovingState = normalMovingState;   
+                break; 
+            case OPPOSITE: 
+                currentMovingState = oppositeMovingState; 
+                break; 
+        }
+        //System.out.println( "Current moving state: " + currentMovingState.getClass().getName());
+    }
+    
+    public void setProtectionState(EProtectionStates stateName)
+    {
+        switch(stateName){
+            case PROTECTED: 
+                currentProtectionState = protectedState;   
+                
+                break; 
+            case UNPROTECTED: 
+                currentProtectionState = unprotectedState; 
+                break; 
+        }
+        //System.out.println( "Current protection state: " + currentProtectionState.getClass().getName());
+    }    
 }

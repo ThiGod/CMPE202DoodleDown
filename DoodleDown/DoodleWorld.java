@@ -11,12 +11,15 @@ import java.util.*;
 public abstract class DoodleWorld extends World
 {
     private int timer = 0;  
-    private static int CHECKPOINT = 80; 
+    private static int GROUNDCHECKPOINT = 120; 
     private static int SPEEDCHECKPOINT = 500;
+    private static int ITEMCHECKPOINT = 300;
     private boolean gameOver=false;
     private boolean soundPlayed=false;
     private boolean endScreenShowed=false;
     private static int finalScore=0;
+    protected Doodler doodler;
+    protected ScoreKeeper scoreKeeper;
       
     private int worldMoveUpSpeed = 1; //World go up speed
     private int worldMoveUpAcceleration = 1;
@@ -31,6 +34,7 @@ public abstract class DoodleWorld extends World
      * Constructor for objects of class DoodleWorld.
      * 
      */
+    
     public DoodleWorld()
     {    
         
@@ -51,7 +55,7 @@ public abstract class DoodleWorld extends World
         GreenfootImage image = getBackground();  
         image.scale(400, 600);  
         setBackground(image); 
-        Doodler doodler = new Doodler();
+        doodler = new Doodler();
         addObject(doodler, 175, 34);
         Ground ground = getRegularGround();
         addObject(ground, 162, 129);
@@ -60,9 +64,9 @@ public abstract class DoodleWorld extends World
         Ground ground3 = getRegularGround();
         addObject(ground3, 183, 338);
         ScoreKeeper score=new ScoreKeeper();
+        scoreKeeper = score;
         addObject(score, 345,12);
     }
-    
      
     public void act()
     {   
@@ -72,12 +76,17 @@ public abstract class DoodleWorld extends World
                 return;
             } //do nothing if the game is paused
             //dynamically add ground 
-            if (timer % (CHECKPOINT/worldMoveUpSpeed)!=0) 
-                timer++;
-            else {         
-                timer++;
+            if (timer % (GROUNDCHECKPOINT/worldMoveUpSpeed)==0) {         
                 addGround();
             }
+           //dynamically add item
+            if (timer % (ITEMCHECKPOINT/worldMoveUpSpeed)==0) {
+                addItem();
+            }     
+            timer++;            
+            
+            
+            
             //speed up the whole world  
             if (timer % SPEEDCHECKPOINT==0)
                 worldMoveUpSpeed ++;   
@@ -123,6 +132,14 @@ public abstract class DoodleWorld extends World
         }
     }
     
+    public ScoreKeeper getScoreKeeper(){
+        return scoreKeeper;
+    }
+    
+    public Doodler getDoodler(){
+        return doodler;
+    }
+    
     private void checkPalse()
     {
         if(Greenfoot.isKeyDown("space")) {
@@ -160,6 +177,25 @@ public abstract class DoodleWorld extends World
                 addObject(getRegularGround(), Greenfoot.getRandomNumber(doodleWorldWide), doodleWorldHeight);
                 break;
             }
+    }
+    
+    public void addItem()
+    {
+        int randomNumber = Greenfoot.getRandomNumber(100);
+        
+        if(randomNumber < 10) {
+            addObject(new Shield(), Greenfoot.getRandomNumber(doodleWorldWide), doodleWorldHeight);
+        }else if(randomNumber < 20) {
+            addObject(new PoisonousMushroom(), Greenfoot.getRandomNumber(doodleWorldWide), doodleWorldHeight);
+        }else if(randomNumber < 30) {
+            addObject(new BonusMushroom(), Greenfoot.getRandomNumber(doodleWorldWide), doodleWorldHeight);
+        }else if(randomNumber < 45) {
+            addObject(new BonusStrawberry(), Greenfoot.getRandomNumber(doodleWorldWide), doodleWorldHeight);
+        }else if(randomNumber < 65) {
+            addObject(new BonusGrape(), Greenfoot.getRandomNumber(doodleWorldWide), doodleWorldHeight);
+        }else if(randomNumber < 70) {
+            addObject(new BonusBanana(), Greenfoot.getRandomNumber(doodleWorldWide), doodleWorldHeight);
+        }
     }
     
     public void gameOver()

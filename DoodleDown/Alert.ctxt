@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.params=msg
+comment0.target=Alert(java.lang.String)
+comment1.params=
+comment1.target=void\ act()
+comment2.params=msg
+comment2.target=void\ showMessage(java.lang.String)
+comment3.params=
+comment3.target=void\ removeMessage()
+numComments=4
