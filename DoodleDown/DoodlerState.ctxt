@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.params=d
+comment0.target=DoodlerState(Doodler)
+comment1.params=under
+comment1.target=void\ checkGround(greenfoot.Actor)
+comment2.params=
+comment2.target=void\ fall()
+numComments=3

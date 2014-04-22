@@ -9,18 +9,17 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Doodler extends Actor
 {
     public int moveHorizontalSpeed = 8; //Doodler honrizontal speed
-    private int fallingSpeed = 0; //Doodler falling speed
-    private int fallingAcceleration = 1; //Doodler falling speed acceleration
+    public int fallingSpeed = 0; //Doodler falling speed
+    public int fallingAcceleration = 1; //Doodler falling speed acceleration
     public boolean game = false; //Check the game is done or not
     public boolean soundPlayed = false; //Check whether the sound has played or not.
-    private int doodleWorldWide = 400;
+    public int doodleWorldWide = 400;
     public int doodleWorldHeight = 600;
     private int doodleWide = 40;
     private int doodleHeight = 40;
     private String prevDirection="right"; //the last direction the doodler was facing to 
     public Item currentMovingItem;
     public Item currentProtectionItem;
-    
     
     private IMovingState normalMovingState = new NormalMovingState(this);
     private IMovingState oppositeMovingState = new OppositeMovingState(this);
@@ -30,6 +29,9 @@ public class Doodler extends Actor
     private IProtectionState protectedState = new ProtectedState(this);
     public IProtectionState currentProtectionState = unprotectedState;    
     
+    private IDoodlerState doodlerFallingState = new DoodlerFallingState(this);
+    private IDoodlerState doodlerGroundState = new DoodlerGroundState(this);
+    public IDoodlerState currentDoodlerState = doodlerFallingState;
 
     /**
      * Act - do whatever the Doodler wants to do. This method is called whenever
@@ -94,31 +96,10 @@ public class Doodler extends Actor
     public boolean onGround() {
         Actor under = getOneObjectAtOffset(0, (doodleHeight/2), Ground.class);
         boolean onTop = (under!=null && under.getClass() != DeadGround.class);  
-        
         if(onTop){
             soundPlayed = false;
-            alignDoodler(under); //make sure the doodler is on the surface of the Ground
-        }
-        if (under!=null){
-            
-            if( under.getClass()== BlackHoleGround.class){
-                setLocation(Greenfoot.getRandomNumber(doodleWorldWide-10), Greenfoot.getRandomNumber(doodleWorldHeight-10));
-            }
-            
-            if (under.getClass()== HeatingGround.class || under.getClass()== MuddyGround.class){
-                //set the horizontalState to slowHorizontalState
-                //in this state, we can also add some effect pic around doodler
-            }
-            
-            if (under.getClass()== IceGround.class ){
-               //set the horizontalState to fastHorizontalState
-               //in this state, we can also add some effect pic around doodler
-            }
-
-            if (under.getClass()== ToxicGround.class){
-                //set the horizontalState to stalkedHorizontalState
-                //in this state, we can also add some effect pic around doodler
-            }
+            setDoodlerState(EDoodlerStates.ONGROUND);
+            currentDoodlerState.checkGround(under);
         }
         return onTop;
     }
@@ -132,10 +113,6 @@ public class Doodler extends Actor
         }
     }
     
-    private void alignDoodler(Actor ground){
-        setLocation(getX(), ground.getY()-ground.getImage().getHeight()/2-10);
-    }
-    
     private void turnAround(String direction){
         if(prevDirection!=direction){
             prevDirection=direction;
@@ -147,17 +124,9 @@ public class Doodler extends Actor
         if(onGround()==true) {
             fallingSpeed = 0;
         } else {
-            fall();
+            setDoodlerState(EDoodlerStates.FALLING);
+            currentDoodlerState.fall();
         }
-    }
-    
-    public void fall() {
-        if(!soundPlayed) {
-            Greenfoot.playSound("Jump.mp3");
-            soundPlayed = true;
-        }
-        setLocation(getX(), getY() + fallingSpeed);
-        fallingSpeed = fallingSpeed + fallingAcceleration;
     }
     
     public void moveLeft() {
@@ -171,6 +140,19 @@ public class Doodler extends Actor
     public void setWorldSpeed(int speed)
     {
         ((DoodleWorld) getWorld()).setSpeed(speed);
+    }
+    
+    public void setDoodlerState(EDoodlerStates stateName)
+    {
+        switch(stateName){
+            case FALLING: 
+                currentDoodlerState = doodlerFallingState;   
+                break; 
+            case ONGROUND: 
+                currentDoodlerState = doodlerGroundState; 
+                break; 
+        }
+        //System.out.println( "Current doodler state: " + currentDoodlerState.getClass().getName());
     }
     
     public void setMovingState(EMovingStates stateName)
