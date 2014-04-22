@@ -18,7 +18,8 @@ public class Doodler extends Actor
     private int doodleWide = 40;
     private int doodleHeight = 40;
     private String prevDirection="right"; //the last direction the doodler was facing to 
-    public Item currentItem;
+    public Item currentMovingItem;
+    public Item currentProtectionItem;
     
     
     private IMovingState normalMovingState = new NormalMovingState(this);

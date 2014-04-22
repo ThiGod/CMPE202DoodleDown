@@ -17,8 +17,9 @@ public class PoisonousMushroom extends Item
     public void startEffect(Doodler d){
         super.startEffect(d);
         doodler.setMovingState(EMovingStates.OPPOSITE);
+        doodler.currentMovingItem = this;
         
-        Alert alert = new Alert("Feel dizzy~");
+        Alert alert = new Alert("I am feeling dizzy~");
         ((DoodleWorld) getWorld()).addObject(alert, doodler.getX(),doodler.getY()-20);
         
         MushroomSymbol mushroomSymbol = new MushroomSymbol(200);
@@ -28,7 +29,11 @@ public class PoisonousMushroom extends Item
     public void stopEffect()
     {
         super.stopEffect();
-        doodler.setMovingState(EMovingStates.NORMAL);
+        if(doodler.currentMovingItem == this){
+            Alert alert = new Alert("Feel much better now!");
+            ((DoodleWorld) getWorld()).addObject(alert, doodler.getX(),doodler.getY()-20);            
+            doodler.setMovingState(EMovingStates.NORMAL);
+        }
     }
     
 }

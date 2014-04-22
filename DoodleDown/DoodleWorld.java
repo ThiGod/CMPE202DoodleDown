@@ -114,6 +114,8 @@ public abstract class DoodleWorld extends World
             removeObjects(getObjects(Doodler.class));
             removeObjects(getObjects(Ground.class));
             removeObjects(getObjects(ScoreKeeper.class));
+            removeObjects(getObjects(Item.class));
+            removeObjects(getObjects(Symbol.class));
         
             if(!soundPlayed) 
             {

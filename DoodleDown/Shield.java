@@ -22,6 +22,7 @@ public class Shield extends Item
     public void startEffect(Doodler d){
         super.startEffect(d);
         doodler.setProtectionState(EProtectionStates.PROTECTED);
+        doodler.currentProtectionItem = this;
         
         Alert alert = new Alert("Get shield!");
         ((DoodleWorld) getWorld()).addObject(alert, doodler.getX(),doodler.getY()-20);
@@ -33,6 +34,10 @@ public class Shield extends Item
     public void stopEffect()
     {
         super.stopEffect();
-        doodler.setProtectionState(EProtectionStates.UNPROTECTED);
+        if (doodler.currentProtectionItem == this){
+            Alert alert = new Alert("Lost shield!");
+            ((DoodleWorld) getWorld()).addObject(alert, doodler.getX(),doodler.getY()-20);            
+            doodler.setProtectionState(EProtectionStates.UNPROTECTED);
+        }
     }
 }

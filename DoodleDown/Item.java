@@ -51,7 +51,6 @@ public abstract class Item extends Actor
         getImage().setTransparency(0);
         setLocation(400,0);
         doodler = d;
-        doodler.currentItem = this;
         //getWorld().removeObject(this);
     }
     
