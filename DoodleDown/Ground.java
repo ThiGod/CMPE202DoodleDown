@@ -8,15 +8,12 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Ground extends Actor
 {
-    
-    /**
-     * Act - do whatever the Ground wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
+ 
+
     public void act(){
         if(!getWorld().getObjects(Doodler.class).isEmpty() && !((DoodleWorld)getWorld()).isPaused) {
             groundMoveUp();
-            checkGround();
+            checkRemove();
         }
     }    
     
@@ -25,11 +22,13 @@ public class Ground extends Actor
         setLocation(getX(), getY() - worldMoveUpSpeed);
     }
     
-    public void checkGround() {
+    public void checkRemove() {
         if(getY() == 0) {
             getWorld().removeObject(this);
         }
     }
-
-
+    
+    public void startGroundEffect(Doodler d){
+    }
+    
 }

@@ -7,7 +7,7 @@
 public abstract class MovingState implements IMovingState
 {
     protected Doodler doodler;
-    
+  
     public MovingState(Doodler d)
     {
         doodler = d;

@@ -13,6 +13,7 @@ public class Doodler extends Actor
     public int fallingAcceleration = 1; //Doodler falling speed acceleration
     public boolean game = false; //Check the game is done or not
     public boolean soundPlayed = false; //Check whether the sound has played or not.
+    public boolean stucked=false; // check whether the doodler is stucked or not
     public int doodleWorldWide = 400;
     public int doodleWorldHeight = 600;
     private int doodleWide = 40;
@@ -21,17 +22,24 @@ public class Doodler extends Actor
     public Item currentMovingItem;
     public Item currentProtectionItem;
     
+    
     private IMovingState normalMovingState = new NormalMovingState(this);
     private IMovingState oppositeMovingState = new OppositeMovingState(this);
+    private IMovingState fastMovingState = new FastMovingState(this);
+    private IMovingState slowMovingState = new SlowMovingState(this);
+    private IMovingState stuckMovingState = new StuckMovingState(this);
     public IMovingState currentMovingState = normalMovingState;
+    public EMovingStates currentMovingStateName =EMovingStates.NORMAL;
     
     private IProtectionState unprotectedState = new UnprotectedState(this);
     private IProtectionState protectedState = new ProtectedState(this);
-    public IProtectionState currentProtectionState = unprotectedState;    
+    public IProtectionState currentProtectionState = unprotectedState;
+    public EProtectionStates currentProtectionStateName =EProtectionStates.UNPROTECTED;
     
     private IDoodlerState doodlerFallingState = new DoodlerFallingState(this);
     private IDoodlerState doodlerGroundState = new DoodlerGroundState(this);
     public IDoodlerState currentDoodlerState = doodlerFallingState;
+    public EDoodlerStates currentDoodlerStateName = EDoodlerStates.FALLING;
 
     /**
      * Act - do whatever the Doodler wants to do. This method is called whenever
@@ -93,16 +101,6 @@ public class Doodler extends Actor
         setLocation(getX(), getY() - worldMoveUpSpeed);
     }
     
-    public boolean onGround() {
-        Actor under = getOneObjectAtOffset(0, (doodleHeight/2), Ground.class);
-        boolean onTop = (under!=null && under.getClass() != DeadGround.class);  
-        if(onTop){
-            soundPlayed = false;
-            setDoodlerState(EDoodlerStates.ONGROUND);
-            currentDoodlerState.checkGround(under);
-        }
-        return onTop;
-    }
     
     public void checkItems(){
         Actor item = getOneObjectAtOffset(0, (doodleHeight/2), Item.class);
@@ -121,9 +119,18 @@ public class Doodler extends Actor
     }
     
     public void checkFall() {
-        if(onGround()==true) {
+        Actor underDoodlerGround = getOneObjectAtOffset(0, (doodleHeight/2), Ground.class);
+        boolean onTop = (underDoodlerGround!=null && underDoodlerGround.getClass() != DeadGround.class);
+        if(onTop) {
+            if(this.currentDoodlerStateName!=EDoodlerStates.ONGROUND) //avoid resetting all the time
+            setDoodlerState(EDoodlerStates.ONGROUND);
+            soundPlayed = false;
             fallingSpeed = 0;
+            currentDoodlerState.checkGround(underDoodlerGround);
+            //will call Ground startGroundEffect,
+            // then set the MovingState according to different gournd
         } else {
+            if(this.currentDoodlerStateName!=EDoodlerStates.FALLING)//avoid resetting all the time
             setDoodlerState(EDoodlerStates.FALLING);
             currentDoodlerState.fall();
         }
@@ -146,10 +153,12 @@ public class Doodler extends Actor
     {
         switch(stateName){
             case FALLING: 
-                currentDoodlerState = doodlerFallingState;   
+                currentDoodlerState = doodlerFallingState;
+                currentDoodlerStateName =EDoodlerStates.FALLING;
                 break; 
             case ONGROUND: 
-                currentDoodlerState = doodlerGroundState; 
+                currentDoodlerState = doodlerGroundState;
+                currentDoodlerStateName =EDoodlerStates.ONGROUND;
                 break; 
         }
         //System.out.println( "Current doodler state: " + currentDoodlerState.getClass().getName());
@@ -159,24 +168,40 @@ public class Doodler extends Actor
     {
         switch(stateName){
             case NORMAL: 
-                currentMovingState = normalMovingState;   
+                currentMovingState = normalMovingState;
+                currentMovingStateName =EMovingStates.NORMAL;
                 break; 
             case OPPOSITE: 
-                currentMovingState = oppositeMovingState; 
+                currentMovingState = oppositeMovingState;
+                currentMovingStateName =EMovingStates.OPPOSITE;
                 break; 
+            case FAST: 
+                currentMovingState = fastMovingState;
+                currentMovingStateName =EMovingStates.FAST;
+                break; 
+            case SLOW: 
+                currentMovingState = slowMovingState;
+                currentMovingStateName =EMovingStates.SLOW;
+                break; 
+            case STUCK: 
+                currentMovingState = stuckMovingState;
+                currentMovingStateName =EMovingStates.STUCK;
+                break;                
         }
         //System.out.println( "Current moving state: " + currentMovingState.getClass().getName());
     }
+    
     
     public void setProtectionState(EProtectionStates stateName)
     {
         switch(stateName){
             case PROTECTED: 
                 currentProtectionState = protectedState;   
-                
+                currentProtectionStateName =EProtectionStates.PROTECTED;
                 break; 
             case UNPROTECTED: 
-                currentProtectionState = unprotectedState; 
+                currentProtectionState = unprotectedState;
+                currentProtectionStateName =EProtectionStates.UNPROTECTED;
                 break; 
         }
         //System.out.println( "Current protection state: " + currentProtectionState.getClass().getName());

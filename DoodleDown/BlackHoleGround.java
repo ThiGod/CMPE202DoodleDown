@@ -8,9 +8,12 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class BlackHoleGround extends SpecialGround
 {
-    /**
-     * Act - do whatever the BlackHoleGround wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
-   
+ 
+   public void startGroundEffect(Doodler d){ 
+       
+      Alert alert = new Alert("Oh Shit! Black Hole!");
+       ((DoodleWorld) getWorld()).addObject(alert, d.getX(),d.getY()-20);
+      d.setLocation(Greenfoot.getRandomNumber(d.doodleWorldWide-10), Greenfoot.getRandomNumber(d.doodleWorldHeight-10));           
+    }
+    
 }

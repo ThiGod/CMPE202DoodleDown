@@ -8,9 +8,13 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class HeatingGround extends SpecialGround
 {
-    /**
-     * Act - do whatever the HeatingGround wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
+  public void startGroundEffect(Doodler d){ 
+    if(d.currentMovingStateName!=EMovingStates.SLOW){ //use if to avoid resetting all the time 
+      Alert alert = new Alert("Heat! so hurt!");
+       ((DoodleWorld) getWorld()).addObject(alert, d.getX(),d.getY()-20);
+       d.setMovingState(EMovingStates.SLOW); 
+    
+    }
+  }
     
 }

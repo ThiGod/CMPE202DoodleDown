@@ -3,6 +3,6 @@ comment0.params=d
 comment0.target=DoodlerGroundState(Doodler)
 comment1.params=
 comment1.target=void\ fall()
-comment2.params=under
+comment2.params=groundUnder
 comment2.target=void\ checkGround(greenfoot.Actor)
 numComments=3

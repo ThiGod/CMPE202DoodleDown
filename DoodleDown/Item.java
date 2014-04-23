@@ -48,7 +48,7 @@ public abstract class Item extends Actor
     public void startEffect(Doodler d){
         isInEffect = true;
         isActivated = true;
-        getImage().setTransparency(0);
+        getImage().setTransparency(0); //what this mean?
         setLocation(400,0);
         doodler = d;
         //getWorld().removeObject(this);

@@ -1,3 +1,3 @@
 public enum EMovingStates {
-    NORMAL,OPPOSITE
+    NORMAL,OPPOSITE,SLOW,FAST,STUCK
 }

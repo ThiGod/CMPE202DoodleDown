@@ -17,9 +17,15 @@ public class DoodlerFallingState extends DoodlerState
             doodler.soundPlayed = true;
         }
         */
+        //Once the doolder is not on Ground, will end Ground effect on doodler, 
+        //set doodler MovingState to NormalMovingState
+        if(doodler.currentMovingStateName!=EMovingStates.NORMAL) //avoid resetting all the time
+        doodler.setMovingState(EMovingStates.NORMAL);
+        
         doodler.setLocation(doodler.getX(), doodler.getY() + doodler.fallingSpeed);
         doodler.fallingSpeed = doodler.fallingSpeed + doodler.fallingAcceleration;
     }
     public void checkGround(Actor under) {
+
     }
 }

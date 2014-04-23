@@ -8,32 +8,17 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class DoodlerGroundState extends DoodlerState 
 {
     public DoodlerGroundState(Doodler d) {
-        super(d);
+        super(d);  //will set the private attribuete doodler
     }
     public void fall() {
     }
-    public void checkGround(Actor under) {
-        doodler.setLocation(doodler.getX(), under.getY() - under.getImage().getHeight()/2-10);
-        if (under!=null){
+    public void checkGround(Actor groundUnder) {
+        doodler.setLocation(doodler.getX(), groundUnder.getY() - groundUnder.getImage().getHeight()/2-10);
+        if (groundUnder!=null){
+            //according to different ground under the dooder, the doodler MovingState will be set different
+            Ground Under=(Ground) groundUnder;
+            Under.startGroundEffect(doodler);
             
-            if( under.getClass() == BlackHoleGround.class){
-                doodler.setLocation(Greenfoot.getRandomNumber(doodler.doodleWorldWide-10), Greenfoot.getRandomNumber(doodler.doodleWorldHeight-10));
-            }
-            
-            if (under.getClass() == HeatingGround.class || under.getClass()== MuddyGround.class){
-                //set the horizontalState to slowHorizontalState
-                //in this state, we can also add some effect pic around doodler
-            }
-            
-            if (under.getClass() == IceGround.class ){
-               //set the horizontalState to fastHorizontalState
-               //in this state, we can also add some effect pic around doodler
-            }
-
-            if (under.getClass() == ToxicGround.class){
-                //set the horizontalState to stalkedHorizontalState
-                //in this state, we can also add some effect pic around doodler
-            }
         }
     }
 }

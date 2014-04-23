@@ -11,7 +11,7 @@ public class BrickGround extends SpecialGround
     private int timer = 0;  
     private static int CHECKPOINT = Greenfoot.getRandomNumber(25) + 60;
     
-    public void checkGround() {
+    public void checkRemove() {
         CHECKPOINT = Greenfoot.getRandomNumber(25) + 60;
         if(getY() == 0) {
             getWorld().removeObject(this);
