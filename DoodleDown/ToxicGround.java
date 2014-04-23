@@ -11,6 +11,7 @@ public class ToxicGround extends SpecialGround
    private boolean stuckbegin;
    private int stuckcount=0;
    private Doodler doodler;
+   private int STUCKTIME=80;
    
    ToxicGround(){
        super();
@@ -20,7 +21,7 @@ public class ToxicGround extends SpecialGround
    public void act(){
       super.act();
       if(stuckbegin) stuckcount++;
-      if(stuckcount>100) stopGroundEffect(doodler);
+      if(stuckcount>STUCKTIME) stopGroundEffect(doodler);
       
    }
     
@@ -39,5 +40,7 @@ public class ToxicGround extends SpecialGround
    public void stopGroundEffect(Doodler d){
        //set the stuckedState in doodler to stucked==false
        d.stucked=false;
+       stuckbegin=false;
+       stuckcount=0;
     }
 }
