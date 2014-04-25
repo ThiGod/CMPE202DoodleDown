@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.ArrayList;
 
 /**
  * Write a description of class Doodler here.
@@ -6,7 +7,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Doodler extends Actor
+public class Doodler extends Actor implements IDoodler
 {
     public int moveHorizontalSpeed = 8; //Doodler honrizontal speed
     public int fallingSpeed = 0; //Doodler falling speed
@@ -22,7 +23,9 @@ public class Doodler extends Actor
     public Item currentMovingItem;
     public Item currentProtectionItem;
     
-    
+    public ArrayList<Observer> itemObservers = new ArrayList<Observer>(); // maintaining a list of observers for observing item hit
+    private boolean observersAttached = false;
+
     private IMovingState normalMovingState = new NormalMovingState(this);
     private IMovingState oppositeMovingState = new OppositeMovingState(this);
     private IMovingState fastMovingState = new FastMovingState(this);
@@ -47,6 +50,10 @@ public class Doodler extends Actor
      */
     public void act() 
     {
+        if(!observersAttached){
+            attach(new SoundManager(new Doodler()));
+            observersAttached=true;
+        }
         if(((DoodleWorld)getWorld()).isPaused){
             return;
         } //do nothing if the game is paused
@@ -59,6 +66,15 @@ public class Doodler extends Actor
            ((DoodleWorld)getWorld()).gameOver();
         }
     }    
+    
+    //attaching object to the list of observers
+    public void attach(Observer object){
+        itemObservers.add(object);
+    }
+    
+    public void detach(Observer object){
+        itemObservers.remove(object);
+    }
     
     private void checkKeys() {
         if(Greenfoot.isKeyDown("left")) {
@@ -107,7 +123,15 @@ public class Doodler extends Actor
         if(item != null){
             if (!((Item)item).isActivated){
                 ((Item)item).startEffect(this);
+                notifyObservers();
             }
+        }
+    }
+    
+    //notify the item observer classes on item hit
+    public void notifyObservers(){
+        for (Observer object: itemObservers){
+            object.update();
         }
     }
     
