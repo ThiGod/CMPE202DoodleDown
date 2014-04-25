@@ -19,7 +19,7 @@ public abstract class Item extends Actor
             checkBoundary();
             
             if (isInEffect == true){
-                effectTimeCountDown();
+                effectTimeCountDown(this);
             }            
         }
     }    
@@ -37,11 +37,14 @@ public abstract class Item extends Actor
         }
     }    
     
-    public void effectTimeCountDown(){
-        effectiveTimeLeft --;
+    public void effectTimeCountDown(Item i){
+       effectiveTimeLeft --;
         if(effectiveTimeLeft == 0)
         {
-            stopEffect();
+            if(i.getClass().getSimpleName().equals("Turtle")||i.getClass().getSimpleName().equals("Rocket"))
+                i.stopEffect();
+            else
+                stopEffect();
         }
     }    
     

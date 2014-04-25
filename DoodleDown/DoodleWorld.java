@@ -198,6 +198,12 @@ public abstract class DoodleWorld extends World
         }else if(randomNumber < 70) {
             addObject(new BonusBanana(), Greenfoot.getRandomNumber(doodleWorldWide), doodleWorldHeight);
         }
+        else if(randomNumber<85) {
+            addObject(new Rocket(), Greenfoot.getRandomNumber(doodleWorldWide), doodleWorldHeight);
+        }
+        else if(randomNumber<100 && worldMoveUpSpeed>2) {
+            addObject(new Turtle(), Greenfoot.getRandomNumber(doodleWorldWide), doodleWorldHeight);
+        }
     }
     
     public void gameOver()

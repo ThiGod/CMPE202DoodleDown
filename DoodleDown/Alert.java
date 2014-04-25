@@ -36,7 +36,7 @@ public class Alert extends Actor
    private void showMessage(String msg){
         //System.out.println( "Clicked!" ) ;
         GreenfootImage gi;
-        gi = new GreenfootImage(100,100);
+        gi = new GreenfootImage(150,100);
         gi.setColor( java.awt.Color.YELLOW ) ;
         gi.drawString( msg, 0, 50 );
         this.setImage(gi);
