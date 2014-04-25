@@ -25,8 +25,10 @@ public class Rocket extends Item
     public void stopEffect(){
         super.stopEffect();
         int speed=((DoodleWorld)getWorld()).getSpeed();
+        if(speed>3){
         ((DoodleWorld)getWorld()).setSpeed(speed-3);
         Alert alert=new Alert("Tired! Back to normal.");
         ((DoodleWorld) getWorld()).addObject(alert, doodler.getX(),doodler.getY()-20);
+    }
     }
 }

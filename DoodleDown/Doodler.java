@@ -121,9 +121,9 @@ public class Doodler extends Actor implements IDoodler
     public void checkItems(){
         Actor item = getOneObjectAtOffset(0, (doodleHeight/2), Item.class);
         if(item != null){
+            notifyObservers();
             if (!((Item)item).isActivated){
                 ((Item)item).startEffect(this);
-                notifyObservers();
             }
         }
     }
