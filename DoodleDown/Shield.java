@@ -27,6 +27,10 @@ public class Shield extends Item
         Alert alert = new Alert("Get shield!");
         ((DoodleWorld) getWorld()).addObject(alert, doodler.getX(),doodler.getY()-20);
         
+        DoodlerPowerUpdate powerUpdate = new DoodlerPowerUpdate(((DoodleWorld) getWorld()).getRealTimeScorer());
+        powerUpdate.updateScore();
+        alert = new Alert("+20");
+        
         ShieldSymbol shieldSymbol = new ShieldSymbol(500);
         ((DoodleWorld) getWorld()).addObject(shieldSymbol,380,40);
     }

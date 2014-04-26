@@ -19,7 +19,8 @@ public abstract class DoodleWorld extends World
     private boolean endScreenShowed=false;
     private static int finalScore=0;
     protected Doodler doodler;
-    protected ScoreKeeper scoreKeeper;
+    //protected ScoreKeeper scoreKeeper;
+    protected IRealTimeScorer realTimeScorer;
       
     private int worldMoveUpSpeed = 1; //World go up speed
     private int worldMoveUpAcceleration = 1;
@@ -46,10 +47,6 @@ public abstract class DoodleWorld extends World
     public abstract Ground getRegularGround();
     public abstract ArrayList<Ground> getSpecialGrounds();
     
-    /**
-     * Prepare the world for the start of the program. That is: create the initial
-     * objects and add them to the world.
-     */
     private void prepare()
     {
         GreenfootImage image = getBackground();  
@@ -63,9 +60,12 @@ public abstract class DoodleWorld extends World
         addObject(ground2, 306, 238);
         Ground ground3 = getRegularGround();
         addObject(ground3, 183, 338);
-        ScoreKeeper score=new ScoreKeeper();
-        scoreKeeper = score;
-        addObject(score, 345,12);
+        //ScoreKeeper score=new ScoreKeeper();
+        //scoreKeeper = score;
+        IRealTimeScorer scorer = new RealTimeScorer();
+        realTimeScorer = scorer;
+        
+        addObject((RealTimeScorer)scorer, 345,12);
     }
      
     public void act()
@@ -92,9 +92,12 @@ public abstract class DoodleWorld extends World
                 worldMoveUpSpeed ++;   
         } 
         else if (!endScreenShowed) {
-            if (!getObjects(ScoreKeeper.class).isEmpty()) {  
-                ScoreKeeper keeper = (ScoreKeeper)getObjects(ScoreKeeper.class).get(0);  
-                finalScore=keeper.getScore(); //Final score at the end of the game. 
+            //if (!getObjects(ScoreKeeper.class).isEmpty()) { 
+            if (!getObjects(RealTimeScorer.class).isEmpty()) {    
+                //ScoreKeeper keeper = (ScoreKeeper)getObjects(ScoreKeeper.class).get(0);  
+                //finalScore=keeper.getScore(); //Final score at the end of the game. 
+                RealTimeScorer scorer = (RealTimeScorer)getObjects(RealTimeScorer.class).get(0);  
+                finalScore=scorer.getScore(); //Final score at the end of the game. 
             }
         
             //Set Game Over screen
@@ -113,7 +116,8 @@ public abstract class DoodleWorld extends World
             addObject(m2,(doodleWorldWide/2),(doodleWorldHeight/2+50));
             removeObjects(getObjects(Doodler.class));
             removeObjects(getObjects(Ground.class));
-            removeObjects(getObjects(ScoreKeeper.class));
+            //removeObjects(getObjects(ScoreKeeper.class));
+            removeObjects(getObjects(RealTimeScorer.class));
             removeObjects(getObjects(Item.class));
             removeObjects(getObjects(Symbol.class));
         
@@ -134,8 +138,11 @@ public abstract class DoodleWorld extends World
         }
     }
     
-    public ScoreKeeper getScoreKeeper(){
-        return scoreKeeper;
+//     public ScoreKeeper getScoreKeeper(){
+//         return scoreKeeper;
+//     }
+    public IRealTimeScorer getRealTimeScorer(){
+        return realTimeScorer;
     }
     
     public Doodler getDoodler(){
@@ -209,8 +216,10 @@ public abstract class DoodleWorld extends World
     public void gameOver()
     {
         gameOver=true;
-        ScoreKeeper keeper = (ScoreKeeper)getObjects(ScoreKeeper.class).get(0);  
-        finalScore=keeper.getScore(); //Final score at the end of the game. 
+        //ScoreKeeper keeper = (ScoreKeeper)getObjects(ScoreKeeper.class).get(0);  
+        RealTimeScorer scorer = (RealTimeScorer)getObjects(RealTimeScorer.class).get(0);  
+        //finalScore=keeper.getScore(); //Final score at the end of the game. 
+        finalScore=scorer.getScore(); //Final score at the end of the game. 
         if(finalScore > 0) {
             try {
                 if(finalScore > highScore) {

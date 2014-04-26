@@ -19,6 +19,10 @@ public class Turtle extends Item
         int speed=((DoodleWorld)getWorld()).getSpeed();
         ((DoodleWorld)getWorld()).setSpeed(speed-2);
         Alert alert=new Alert("Speeding Down");
+        
+        DoodlerPowerUpdate powerUpdate = new DoodlerPowerUpdate(((DoodleWorld) getWorld()).getRealTimeScorer());
+        powerUpdate.updateScore();
+        alert = new Alert("+20");
         ((DoodleWorld) getWorld()).addObject(alert, doodler.getX(),doodler.getY()-20);
     }
     

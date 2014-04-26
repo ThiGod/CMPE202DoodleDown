@@ -1,0 +1,12 @@
+#BlueJ class context
+comment0.params=
+comment0.target=void\ act()
+comment1.params=
+comment1.target=int\ getScore()
+comment2.params=score
+comment2.target=void\ setScore(int)
+comment3.params=worldSpeed
+comment3.target=void\ addScore(int)
+comment4.params=
+comment4.target=void\ updateScore()
+numComments=5

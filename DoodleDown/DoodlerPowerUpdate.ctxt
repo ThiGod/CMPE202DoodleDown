@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.params=scorer
+comment0.target=DoodlerPowerUpdate(IRealTimeScorer)
+comment1.params=
+comment1.target=void\ updateScore()
+comment2.params=
+comment2.target=int\ getScore()
+comment3.params=
+comment3.target=java.lang.String\ getScoreUpdateReason()
+numComments=4

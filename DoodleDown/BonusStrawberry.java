@@ -15,8 +15,10 @@ public class BonusStrawberry extends Item
     
     public void startEffect(Doodler d){
         super.startEffect(d);
-        ((DoodleWorld) getWorld()).getScoreKeeper().addScore(5);
-        Alert alert = new Alert("+5");
+        //((DoodleWorld) getWorld()).getScoreKeeper().addScore(5);
+        DoodlerFoodUpdate foodUpdate = new DoodlerFoodUpdate(((DoodleWorld) getWorld()).getRealTimeScorer());
+        foodUpdate.updateScore();
+        Alert alert = new Alert("+10");
         ((DoodleWorld) getWorld()).addObject(alert, doodler.getX(),doodler.getY()-20);
     }      
 }

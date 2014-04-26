@@ -15,7 +15,9 @@ public class BonusBanana extends Item
     
     public void startEffect(Doodler d){
         super.startEffect(d);
-        ((DoodleWorld) getWorld()).getScoreKeeper().addScore(10);
+        //((DoodleWorld) getWorld()).getScoreKeeper().addScore(10);
+        DoodlerFoodUpdate foodUpdate = new DoodlerFoodUpdate(((DoodleWorld) getWorld()).getRealTimeScorer());
+        foodUpdate.updateScore();
         Alert alert = new Alert("+10");
         ((DoodleWorld) getWorld()).addObject(alert, doodler.getX(),doodler.getY()-20);
     }   

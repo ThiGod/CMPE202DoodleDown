@@ -15,8 +15,10 @@ public class BonusMushroom extends Item
     
     public void startEffect(Doodler d){
         super.startEffect(d);
-        ((DoodleWorld) getWorld()).getScoreKeeper().addScore(20);
-        Alert alert = new Alert("+50");
+        //((DoodleWorld) getWorld()).getScoreKeeper().addScore(20);
+        DoodlerFoodUpdate foodUpdate = new DoodlerFoodUpdate(((DoodleWorld) getWorld()).getRealTimeScorer());
+        foodUpdate.updateScore();
+        Alert alert = new Alert("+10");
         ((DoodleWorld) getWorld()).addObject(alert, doodler.getX(),doodler.getY()-20);
     }     
 }
