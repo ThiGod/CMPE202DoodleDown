@@ -1,12 +1,12 @@
 /**
- * Write a description of class IDoodler here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
+ * This interface includes the methods which are implemented in Doodler class
+ * for notifying the observers attached.
+ * @author Chitra 
+ * @version 04/25/2014
  */
 public interface IDoodler  
 {
-    public void attach(Observer object);
-    public void detach(Observer object);
+    public void attach(IDoodlerObserver object);
+    public void detach(IDoodlerObserver object);
     public void notifyObservers();
 }

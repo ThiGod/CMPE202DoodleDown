@@ -2,10 +2,9 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.ArrayList;
 
 /**
- * Write a description of class Doodler here.
+ * This class implements all the functionalities of the Doodler
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author (Ameya Joshi, Chitra Soni, Chung Fang, Ling Zhang, Surbhi Vijaywargia, Yulin Ye, Yang Song)
  */
 public class Doodler extends Actor implements IDoodler
 {
@@ -23,8 +22,8 @@ public class Doodler extends Actor implements IDoodler
     public Item currentMovingItem;
     public Item currentProtectionItem;
     
-    public ArrayList<Observer> itemObservers = new ArrayList<Observer>(); // maintaining a list of observers for observing item hit
-    private boolean observersAttached = false;
+    public ArrayList<IDoodlerObserver> itemObservers = new ArrayList<IDoodlerObserver>(); // maintaining a list of observers for observing item hit
+    private boolean observersAttached = false; 
 
     private IMovingState normalMovingState = new NormalMovingState(this);
     private IMovingState oppositeMovingState = new OppositeMovingState(this);
@@ -68,11 +67,11 @@ public class Doodler extends Actor implements IDoodler
     }    
     
     //attaching object to the list of observers
-    public void attach(Observer object){
+    public void attach(IDoodlerObserver object){
         itemObservers.add(object);
     }
     
-    public void detach(Observer object){
+    public void detach(IDoodlerObserver object){
         itemObservers.remove(object);
     }
     
@@ -130,7 +129,7 @@ public class Doodler extends Actor implements IDoodler
     
     //notify the item observer classes on item hit
     public void notifyObservers(){
-        for (Observer object: itemObservers){
+        for (IDoodlerObserver object: itemObservers){
             object.update();
         }
     }

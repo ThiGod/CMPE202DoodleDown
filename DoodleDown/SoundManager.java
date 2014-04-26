@@ -1,26 +1,30 @@
 /**
- * Write a description of class SoundManager here.
+ * This class extends the parent class DoodlerObserver and implemets the logic of playing sound on change of Doodler State
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author (Chitra Soni)
+ * @version (04/25/2014)
  */
 
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
-public class SoundManager extends ConcreteObserver
+public class SoundManager extends DoodlerObserver
 {
-    private boolean soundPlayed=false;
-        
+       
     SoundManager(Doodler doodler){
         super(doodler);
     }
     
     //play sound for the desired item
     public void update(){
-         if(!soundPlayed) 
-            {
-                Greenfoot.playSound("power.wav");
-                soundPlayed = true;
-            }
+        playSound();
+    }
+    
+    public void playSound(){
+        boolean soundPlayed=false;
+        if(!soundPlayed) 
+        {
+            Greenfoot.playSound("power.wav");
+            soundPlayed = true;
+        }
     }
 }
