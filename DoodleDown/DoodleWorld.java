@@ -190,7 +190,7 @@ public abstract class DoodleWorld extends World
     
     public void addItem()
     {
-        int randomNumber = Greenfoot.getRandomNumber(100);
+        int randomNumber = Greenfoot.getRandomNumber(130);
         
         if(randomNumber < 10) {
             addObject(new Shield(), Greenfoot.getRandomNumber(doodleWorldWide), doodleWorldHeight);
@@ -210,6 +210,12 @@ public abstract class DoodleWorld extends World
         }
         else if(randomNumber<100 && worldMoveUpSpeed>2) {
             addObject(new Turtle(), Greenfoot.getRandomNumber(doodleWorldWide), doodleWorldHeight);
+        }
+        else if(randomNumber<115) {
+            addObject(new EatScoreMonster(), Greenfoot.getRandomNumber(doodleWorldWide), doodleWorldHeight);
+        }
+        else if(randomNumber<130) {
+            addObject(new GameOverMonster(), Greenfoot.getRandomNumber(doodleWorldWide), doodleWorldHeight);
         }
     }
     
